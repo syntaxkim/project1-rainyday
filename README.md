@@ -1,3 +1,4 @@
 # Project 1
 
-Web Programming with Python and JavaScript
+Languages: Python, JavaScript, SQL, HTML, CSS
+Frameworks and Libraries: Flask, jQuery, Bootstrap
