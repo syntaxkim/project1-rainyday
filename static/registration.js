@@ -7,9 +7,19 @@ $(document).ready(function() {
             alert("Missing username.");
             return false;
         }
+        else if ($("#registration input[name=name]").val().length < 2)
+        {
+            alert("Pick a username longer than 2 characters.");
+            return false;
+        }
         else if (!$("#registration input[name=password]").val())
         {
             alert("Missing password.");
+            return false;
+        }
+        else if ($("#registration input[name=password]").val().length < 4)
+        {
+            alert("Pick a password longer than 4 characters.");
             return false;
         }
         else if (!$("#registration input[name=confirmation]").val())
