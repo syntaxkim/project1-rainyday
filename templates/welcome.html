@@ -2,5 +2,5 @@
 
 {% block body %}
     <h1>Welcome!</h1>
-    <h3>Now you can <a href="/signin">Sign in</a> with your username.</h3>
+    <h3>Now you can <a href="{{ url_for('signin') }}">Sign in</a> with your username.</h3>
 {% endblock %}
