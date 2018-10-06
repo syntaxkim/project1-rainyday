@@ -24,16 +24,21 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    if id in session:
+        return render_template("index.html", message="hello")
+    else:
+        return render_template("index.html", message="You need to log in to use our service.")
 
 # Sign up
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
+        # Get a name and a password from a user.
         name = request.form.get("name")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
-        # additional server-side confirmation
+        
+        # (additional) server-side confirmation
         if password != confirmation:
             return render_template("error.html", message="Passwords don't match.")
 
@@ -53,13 +58,17 @@ def welcome():
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
     if request.method == "POST":
+        # Create a session.
         session["user_id"] = []
 
+        # Get a name and a password from a user.
         name = request.form.get("name")
         password = request.form.get("password")
 
+        # query for signing in
         user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)", {"name": name, "password": password}).fetchone()
         id = db.execute("SELECT id FROM users WHERE name = :name AND password = CRYPT(:password, password)", {"name": name, "password": password}).fetchone()
+        # If user does not exist in the database, send an error message.
         if user is None:
             return render_template("error.html", message="Invalid username or password.")
         else:
@@ -68,6 +77,7 @@ def signin():
     else:
         return render_template("signin.html")
 
+# Sign out
 @app.route("/signout")
 def signout():
     # Remove the user_id from the session if it's there.
