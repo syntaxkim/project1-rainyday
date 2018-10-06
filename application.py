@@ -21,6 +21,8 @@ engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
 
+# pylint: disable=no-member
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -34,6 +36,12 @@ def register():
     name = request.form.get("name")
     password = request.form.get("password")
     confirmation = request.form.get("confirmation")
+    if password != confirmation:
+        return render_template("error.html", message="Passwords don't match.")
+
+    db.execute("INSERT INTO users (name, password) VALUES (:name, crypt(:password, gen_salt('md5')))", {"name": name, "password": password})
+    db.commit()
+
     return redirect(url_for('welcome'))
 
 @app.route("/welcome")
@@ -48,7 +56,12 @@ def signin():
 def authenticate():
     name = request.form.get("name")
     password = request.form.get("password")
-    return redirect(url_for('index'))
+
+    user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)", {"name": name, "password": password}).fetchone()
+    if user is None:
+        return render_template("error.html", message="Invalid username or password.")
+    else:
+        return redirect(url_for('index'))
 
 @app.errorhandler(404)
 def page_not_found(error):
