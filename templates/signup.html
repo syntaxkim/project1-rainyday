@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 
 {% block heading %}
-    <script src="{{ url_for('static', filename='registration.js') }}"></script>
+    <script src="{{ url_for('static', filename='signup.js') }}"></script>
 {% endblock %}
 
 {% block body %}
     <div class="container">
         <h1>Registration</h1>
         <br>
-        <form action="{{ url_for('register') }}" id="registration" method="POST">
+        <form action="{{ url_for('signup') }}" id="registration" method="POST">
             <div class="form-group">
                 <label>Username</label>
                 <input name="name" class="form-control" type="text" autocomplete="off" autofocus placeholder="Pick a username">

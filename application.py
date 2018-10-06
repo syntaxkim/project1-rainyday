@@ -26,30 +26,33 @@ db = scoped_session(sessionmaker(bind=engine))
 def index():
     return render_template("index.html")
 
-@app.route("/registration")
-def registration():
-    return render_template("registration.html")
+# Sign up
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+        name = request.form.get("name")
+        password = request.form.get("password")
+        confirmation = request.form.get("confirmation")
+        # additional server-side confirmation
+        if password != confirmation:
+            return render_template("error.html", message="Passwords don't match.")
 
-@app.route("/register", methods=["POST"])
-def register():
-    name = request.form.get("name")
-    password = request.form.get("password")
-    confirmation = request.form.get("confirmation")
-    if password != confirmation:
-        return render_template("error.html", message="Passwords don't match.")
+        # query for registration a user into the database
+        db.execute("INSERT INTO users (name, password) VALUES (:name, crypt(:password, gen_salt('md5')))", {"name": name, "password": password})
+        db.commit()
 
-    db.execute("INSERT INTO users (name, password) VALUES (:name, crypt(:password, gen_salt('md5')))", {"name": name, "password": password})
-    db.commit()
-
-    return redirect(url_for("welcome"))
+        return redirect(url_for("welcome"))
+    else:
+        return render_template("signup.html")
 
 @app.route("/welcome")
 def welcome():
     return render_template("welcome.html")
 
+# Sign in
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
-    if request.method == 'POST':
+    if request.method == "POST":
         session["user_id"] = []
 
         name = request.form.get("name")
