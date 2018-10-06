@@ -49,3 +49,7 @@ def authenticate():
     name = request.form.get("name")
     password = request.form.get("password")
     return redirect(url_for('index'))
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('page_not_found.html'), 404
