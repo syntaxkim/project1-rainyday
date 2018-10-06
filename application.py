@@ -20,7 +20,6 @@ Session(app)
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
-
 # pylint: disable=no-member
 
 @app.route("/")
@@ -42,27 +41,36 @@ def register():
     db.execute("INSERT INTO users (name, password) VALUES (:name, crypt(:password, gen_salt('md5')))", {"name": name, "password": password})
     db.commit()
 
-    return redirect(url_for('welcome'))
+    return redirect(url_for("welcome"))
 
 @app.route("/welcome")
 def welcome():
     return render_template("welcome.html")
 
-@app.route("/signin")
+@app.route("/signin", methods=["GET", "POST"])
 def signin():
-    return render_template("signin.html")
+    if request.method == 'POST':
+        session["user_id"] = []
 
-@app.route("/authenticate", methods=["POST"])
-def authenticate():
-    name = request.form.get("name")
-    password = request.form.get("password")
+        name = request.form.get("name")
+        password = request.form.get("password")
 
-    user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)", {"name": name, "password": password}).fetchone()
-    if user is None:
-        return render_template("error.html", message="Invalid username or password.")
+        user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)", {"name": name, "password": password}).fetchone()
+        id = db.execute("SELECT id FROM users WHERE name = :name AND password = CRYPT(:password, password)", {"name": name, "password": password}).fetchone()
+        if user is None:
+            return render_template("error.html", message="Invalid username or password.")
+        else:
+            session["user_id"].append(id)
+            return redirect(url_for("index"))
     else:
-        return redirect(url_for('index'))
+        return render_template("signin.html")
+
+@app.route("/signout")
+def signout():
+    # Remove the user_id from the session if it's there.
+    session.pop('id', None)
+    return redirect(url_for("index"))
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return render_template('page_not_found.html'), 404
+    return render_template("page_not_found.html"), 404
