@@ -39,3 +39,13 @@ def register():
 @app.route("/welcome")
 def welcome():
     return render_template("welcome.html")
+
+@app.route("/signin")
+def signin():
+    return render_template("signin.html")
+
+@app.route("/authenticate", methods=["POST"])
+def authenticate():
+    name = request.form.get("name")
+    password = request.form.get("password")
+    return redirect(url_for('index'))
