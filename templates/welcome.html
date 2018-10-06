@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <h1>Welcome!</h1>
-    <h3>Now you can <a href="{{ url_for('signin') }}">Sign in</a> with your username.</h3>
+    <div class="container">
+        <h1>Welcome!</h1>
+        <h3>You can now <a href="{{ url_for('signin') }}">Sign in</a> with your username.</h3>
+    </div>
 {% endblock %}

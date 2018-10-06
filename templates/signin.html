@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% block heading %}
+    <script src="{{ url_for('static', filename='signin.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     <div class="container">
         <h1>Sign in</h1>
