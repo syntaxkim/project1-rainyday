@@ -2,15 +2,20 @@
 
 {% block body %}
     <div class="container">
-        <h1>index</h1>
-        <div>
-            <a href="/signup">Sign up</a>
+        <div class="navbar">
+            <h1>index</h1>
+            <div>
+                <a href="/signup">Sign up</a>
+            </div>
+            <div>
+                <a href="/signin">Sign in</a>
+            </div>
+            <div>
+                <a href="/signout">Sign out</a>
+            </div>
         </div>
-        <div>
-            <a href="/signin">Sign in</a>
-        </div>
-        <div>
-            <a href="/signout">Sign out</a>
-        </div>
+    </div>
+    <div class="container">
+        {{ message }}
     </div>
 {% endblock %}
