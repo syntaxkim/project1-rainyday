@@ -23,7 +23,7 @@ db = scoped_session(sessionmaker(bind=engine))
 
 # pylint: disable=no-member
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
     # If a user has logged in,
     if "user_id" in session:
@@ -84,6 +84,17 @@ def signout():
         return redirect(url_for("index"))
     else:
         return redirect(url_for("index"))
+
+# Search location
+@app.route("/search", methods=["POST"])
+def search():
+    location = '%' + request.form.get("location").upper() + '%'
+    results = db.execute("SELECT * FROM locations WHERE city LIKE :location", {"location": location}).fetchall()
+
+    if not results:
+        return render_template("search.html", message="No locations in the database")
+
+    return render_template("search.html", results=results)
 
 # If any user tries to access to the nonexistent route, render an error page.
 @app.errorhandler(404)

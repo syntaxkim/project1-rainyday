@@ -2,6 +2,23 @@
 
 {% block body %}
 
-    search
+    <form action="{{ url_for('search') }}" method="POST">
+        <div class="form-group">
+            <input class="form-control" name="location" autofocus autocomplete="off" type="text" placeholder="Search locations">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <br>
+
+    <div>
+        <ul class="list-group">
+            {% for result in results %}
+                <li class="list-group-item">{{ result }}</li>
+            {% else %}
+                <li class="list-group-item">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 
 {% endblock %}
