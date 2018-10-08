@@ -27,7 +27,7 @@ db = scoped_session(sessionmaker(bind=engine))
 def index():
     # If a user has logged in,
     if "user_id" in session:
-        return render_template("index.html", message="hello")
+        return render_template("search.html")
     else:
         return render_template("index.html", message=Markup("You need to <a href='/signin'>sign in</a> to use our service."))
 
