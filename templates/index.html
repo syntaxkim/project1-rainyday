@@ -3,16 +3,19 @@
 {% block body %}
     <div class="container">
         <div class="navbar">
-            <h1>index</h1>
+            <h1>Rainy Day</h1>
+            {% if not "user_id" in session %}
             <div>
                 <a href="/signup">Sign up</a>
             </div>
             <div>
                 <a href="/signin">Sign in</a>
             </div>
+            {% else %}
             <div>
                 <a href="/signout">Sign out</a>
             </div>
+            {% endif %}
         </div>
     </div>
     <div class="container">
