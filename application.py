@@ -103,15 +103,25 @@ def search():
 
     return render_template("search.html", results=results)
 
-@app.route("/search/<int:location_id>")
+@app.route("/search/<int:location_id>", methods=["GET", "POST"])
 def location(location_id):
     if "user_id" in session:
+        if request.method == "POST":
+            name = session["user_id"][1]
+            comment = request.form.get("comment")
+            db.execute("INSERT INTO checkins (name, comment, time, location_id) VALUES (:name, :comment, CURRENT_TIMESTAMP(0), :location_id)",
+                {"name": name, "comment": comment, "location_id": location_id})
+            db.commit()
+            
         location = db.execute("SELECT * FROM locations WHERE id = :id",
             {"id": location_id}).fetchone()
         if location is None:
             return render_template("search.html", message="No locations in the database")
+
+        comments = db.execute("SELECT * FROM checkins WHERE location_id = :id",
+            {"id": location_id}).fetchall()
     
-        return render_template("location.html", location=location)
+        return render_template("location.html", location=location, comments=comments)
     
     return render_template("error.html", message="The requested URL was not found on this server."), 404
 

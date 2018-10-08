@@ -27,6 +27,14 @@
             <li class="list-group-item">Popuation: {{ location.population }}</li>
         </ul>
     </div>
+    <br>
+    <div>
+        <ul class="list-group">
+            {% for comment in comments %}
+                <li class="list-group-item">name: {{ comment.name }}, comment: {{ comment.comment }}, {{ comment.time }}</li>
+            {% endfor %}
+        </ul>
+    </div>
     {% else %}
     <div>
         <ul class="list-group">
@@ -37,7 +45,8 @@
 
     <br>
 
-    <form action="{{ url_for('index') }}" method="POST">
+    {% set location_id = location.id %}
+    <form action="{{ url_for('location', location_id=location_id) }}" method="POST">
         <div class="form-group">
             <input class="form-control" name="comment" autocomplete="off" type="text" placeholder="Leave your comment">
             <small class="form-text text-muted"></small>
