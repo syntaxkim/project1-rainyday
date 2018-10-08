@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, session, render_template, request, redirect, url_for, escape, Markup
+from flask import Flask, session, render_template, request, redirect, url_for, escape
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -29,7 +29,7 @@ def index():
     if "user_id" in session:
         return render_template("search.html")
     else:
-        return render_template("index.html", message=Markup("You need to <a href='/signin'>sign in</a> to use our service."))
+        return render_template("index.html")
 
 # Sign up
 @app.route("/signup", methods=["GET", "POST"])
