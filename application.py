@@ -25,7 +25,7 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
-    if id in session:
+    if "username" in session:
         return render_template("index.html", message="hello")
     else:
         return render_template("index.html", message=Markup("You need to <a href='/signin'>sign in</a> to use our service."))
@@ -59,21 +59,17 @@ def welcome():
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
     if request.method == "POST":
-        # Create a session.
-        session["user_id"] = []
-
         # Get a name and a password from a user.
         name = request.form.get("name")
         password = request.form.get("password")
 
         # query for signing in
         user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)", {"name": name, "password": password}).fetchone()
-        id = db.execute("SELECT id FROM users WHERE name = :name AND password = CRYPT(:password, password)", {"name": name, "password": password}).fetchone()
         # If user does not exist in the database, send an error message.
         if user is None:
             return render_template("error.html", message="Invalid username or password.")
         else:
-            session["user_id"].append(id)
+            session["username"] = db.execute("SELECT id FROM users WHERE name = :name AND password = CRYPT(:password, password)", {"name": name, "password": password}).fetchone()
             return redirect(url_for("index"))
     else:
         return render_template("signin.html")
@@ -82,8 +78,8 @@ def signin():
 @app.route("/signout")
 def signout():
     # Remove the user_id from the session if it's there.
-    if id in session:
-        session.pop(id, None)
+    if "username" in session:
+        session.pop("username", None)
         return redirect(url_for("index"))
     else:
         return redirect(url_for("index"))
