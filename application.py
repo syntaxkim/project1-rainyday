@@ -66,6 +66,7 @@ def signin():
 
         # query for signing in
         user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)", {"name": name, "password": password}).fetchone()
+
         # If user does not exist in the database, send an error message.
         if user is None:
             return render_template("error.html", message="Invalid username or password.")
@@ -88,6 +89,7 @@ def signout():
 # Search location
 @app.route("/search", methods=["POST"])
 def search():
+    # Get the location info from the user.
     location = '%' + request.form.get("location").upper() + '%'
     results = db.execute("SELECT * FROM locations WHERE city LIKE :location", {"location": location}).fetchall()
 

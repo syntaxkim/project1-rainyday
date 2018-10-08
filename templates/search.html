@@ -11,14 +11,24 @@
 
     <br>
 
+    {% if results %}
     <div>
         <ul class="list-group">
             {% for result in results %}
-                <li class="list-group-item">{{ result }}</li>
-            {% else %}
-                <li class="list-group-item">{{ message }}</li>
+                <li class="list-group-item">
+                    <a href="{{ url_for('index') }}">
+                        Zipcode: {{ result.zipcode }}, City: {{ result.city }}, State Codes: {{ result.state }}, Population: {{result. population }}
+                    </a>
+                </li>
             {% endfor %}
         </ul>
     </div>
+    {% else %}
+    <div>
+        <ul class="list-group">
+            {{ message }}
+        </ul>
+    </div>
+    {% endif %}
 
 {% endblock %}
