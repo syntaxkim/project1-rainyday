@@ -92,7 +92,7 @@ def signout():
 def search():
     # Get the location info from the user.
     location = '%' + request.form.get("location").upper() + '%'
-    results = db.execute("SELECT * FROM locations WHERE city LIKE :location", {"location": location}).fetchall()
+    results = db.execute("SELECT * FROM locations WHERE zipcode::varchar LIKE :location OR city LIKE :location", {"location": location}).fetchall()
 
     if not results:
         return render_template("search.html", message="No locations in the database")
