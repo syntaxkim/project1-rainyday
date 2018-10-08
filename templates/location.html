@@ -15,8 +15,16 @@
 
     {% if location %}
     <div>
+        <h5>Location information</h5>
+    </div>
+    <div>
         <ul class="list-group">
             <li class="list-group-item">Zipcode: {{ location.zipcode }}</li>
+            <li class="list-group-item">City: {{ location.city }}</li>
+            <li class="list-group-item">State Code: {{ location.state }}</li>
+            <li class="list-group-item">Latitude: {{ location.lat }}</li>
+            <li class="list-group-item">Longitude: {{ location.long }}</li>
+            <li class="list-group-item">Popuation: {{ location.population }}</li>
         </ul>
     </div>
     {% else %}

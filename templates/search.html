@@ -15,10 +15,13 @@
 
     {% if results %}
     <div>
+        <h5>Search results</h5>
+    </div>
+    <div>
         <ul class="list-group">
             {% for result in results %}
                 <li class="list-group-item">
-                    <a href="{{ url_for('index') }}">
+                    <a href="{{ url_for('location', location_id=result.id) }}">
                         Zipcode: {{ result.zipcode }}, City: {{ result.city }}, State Codes: {{ result.state }}
                     </a>
                 </li>
