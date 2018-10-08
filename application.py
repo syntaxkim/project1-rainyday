@@ -105,17 +105,20 @@ def search():
 
 @app.route("/search/<int:location_id>")
 def location(location_id):
-    location = db.execute("SELECT * FROM location WHERE id = :id",
-        {"id": location_id}).fetchone()
-    if location is None:
-        return render_template("search.html", message="No locations in the database")
+    if "user_id" in session:
+        location = db.execute("SELECT * FROM locations WHERE id = :id",
+            {"id": location_id}).fetchone()
+        if location is None:
+            return render_template("search.html", message="No locations in the database")
     
-    return render_template("location.html", location=location)
+        return render_template("location.html", location=location)
+    
+    return render_template("error.html", message="The requested URL was not found on this server."), 404
 
 # If any user tries to access to the nonexistent route, render an error page.
 @app.errorhandler(404)
 def page_not_found(error):
-    return render_template("page_not_found.html"), 404
+    return render_template("error.html", message="The requested URL was not found on this server."), 404
 
 if __name__ == "__main__":
     app.run()
