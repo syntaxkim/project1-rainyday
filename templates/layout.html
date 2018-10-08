@@ -26,7 +26,7 @@
                 </div>
                 {% else %}
                 <div>
-                    '{{ session["user_id"][1] }}' is currently logged-in
+                    <strong>{{ session["user_id"][1] }}</strong> is currently logged-in
                     <a href="/signout">Sign out</a>
                 </div>
                 {% endif %}
