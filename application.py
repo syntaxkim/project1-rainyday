@@ -52,6 +52,7 @@ def signup():
     else:
         return render_template("signup.html")
 
+# When a new user has signed up
 @app.route("/welcome")
 def welcome():
     return render_template("welcome.html")
