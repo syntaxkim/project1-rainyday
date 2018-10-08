@@ -130,8 +130,6 @@ def location(location_id):
 @app.route("/user/<string:name>")
 def user(name):
     if session["user_id"][1] == name:
-        locations = db.execute("SELECT * FROM locations WHERE id IN (SELECT location_id FROM checkins WHERE name=:name)",
-            {"name": name}).fetchall()
         number = db.execute("SELECT COUNT(*) FROM checkins WHERE name=:name",
             {"name": name}).fetchone()
         comments = db.execute("SELECT * FROM checkins WHERE name=:name",
@@ -139,7 +137,7 @@ def user(name):
         if not comments:
             return render_template("comments.html")
     
-        return render_template("comments.html", number=number, locations=locations, comments=comments)
+        return render_template("comments.html", number=number, comments=comments)
 
     else:
         return render_template("error.html", message="The requested URL was not found on this server."), 404

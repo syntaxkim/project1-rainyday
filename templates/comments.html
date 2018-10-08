@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    {% if comments %}
+        <div>
+            <h5>You have {{ number.count }} comment(s).</h5>
+        </div>
+        <div>
+            <ul>
+            {% for comment in comments %}
+            {% set location_id=comment.location_id %}
+                <li><h5><a href="{{ url_for('location', location_id=location_id) }}">{{ comment.comment }}</a>, {{ comment.time }}</h5></li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <div>
+            <h5>You have no comment.</h5>
+        </div>
+    {% endif %}
+
+{% endblock %}
