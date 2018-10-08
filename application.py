@@ -25,7 +25,8 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
-    if "username" in session:
+    # If a user has logged in,
+    if "user_id" in session:
         return render_template("index.html", message="hello")
     else:
         return render_template("index.html", message=Markup("You need to <a href='/signin'>sign in</a> to use our service."))
@@ -69,7 +70,7 @@ def signin():
         if user is None:
             return render_template("error.html", message="Invalid username or password.")
         else:
-            session["username"] = db.execute("SELECT id FROM users WHERE name = :name AND password = CRYPT(:password, password)", {"name": name, "password": password}).fetchone()
+            session["user_id"] = db.execute("SELECT id FROM users WHERE name = :name AND password = CRYPT(:password, password)", {"name": name, "password": password}).fetchone()
             return redirect(url_for("index"))
     else:
         return render_template("signin.html")
@@ -78,8 +79,8 @@ def signin():
 @app.route("/signout")
 def signout():
     # Remove the user_id from the session if it's there.
-    if "username" in session:
-        session.pop("username", None)
+    if "user_id" in session:
+        session.pop("user_id", None)
         return redirect(url_for("index"))
     else:
         return redirect(url_for("index"))
