@@ -15,7 +15,8 @@
     <body>
         <div class="container">
             <div class="navbar">
-                <h1>Rainy Day</h1>
+                <h1 style><a href="/">Rainy Day</a></h1>
+
                 {% if not "user_id" in session %}
                 <div>
                     <a href="/signup">Sign up</a>
@@ -28,9 +29,14 @@
                     <a href="/signout">Sign out</a>
                 </div>
                 {% endif %}
+
             </div>
-            {% block body %}
-            {% endblock %}
+            <div>
+                
+                {% block body %}
+                {% endblock %}
+            
+            </div>
         </div>
     </body>
 </html>
