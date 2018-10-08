@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% block heading %}
+    <script src="{{ url_for('static', filename='location.js') }}"></script>
+{% endblock %}
+
 {% block body %}
 
     <form action="{{ url_for('search') }}" method="POST">
@@ -46,7 +50,7 @@
     <br>
 
     {% set location_id = location.id %}
-    <form action="{{ url_for('location', location_id=location_id) }}" method="POST">
+    <form action="{{ url_for('location', location_id=location_id) }}" method="POST" id="comment">
         <div class="form-group">
             <input class="form-control" name="comment" autocomplete="off" type="text" placeholder="Leave your comment">
             <small class="form-text text-muted"></small>
