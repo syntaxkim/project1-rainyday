@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <form action="{{ url_for('search') }}" method="POST">
+        <div class="form-group">
+            <label>Search your locations</label>
+            <input class="form-control" name="location" autofocus autocomplete="off" type="text" placeholder="ZIP Code or city name">
+            <small class="form-text text-muted"></small>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <br>
+
+    {% if location %}
+    <div>
+        <ul class="list-group">
+            <li class="list-group-item">Zipcode: {{ location.zipcode }}</li>
+        </ul>
+    </div>
+    {% else %}
+    <div>
+        <ul class="list-group">
+            {{ message }}
+        </ul>
+    </div>
+    {% endif %}
+
+{% endblock %}
