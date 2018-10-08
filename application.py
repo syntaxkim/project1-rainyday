@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, session, render_template, request, redirect, url_for
+from flask import Flask, session, render_template, request, redirect, url_for, escape, Markup
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -14,6 +14,7 @@ if not os.getenv("DATABASE_URL"):
 # Configure session to use filesystem
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config["SECRET_KEY"] = os.urandom(24)
 Session(app)
 
 # Set up database
@@ -27,7 +28,7 @@ def index():
     if id in session:
         return render_template("index.html", message="hello")
     else:
-        return render_template("index.html", message="You need to log in to use our service.")
+        return render_template("index.html", message=Markup("You need to <a href='/signin'>sign in</a> to use our service."))
 
 # Sign up
 @app.route("/signup", methods=["GET", "POST"])
@@ -37,7 +38,7 @@ def signup():
         name = request.form.get("name")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
-        
+
         # (additional) server-side confirmation
         if password != confirmation:
             return render_template("error.html", message="Passwords don't match.")
@@ -81,9 +82,16 @@ def signin():
 @app.route("/signout")
 def signout():
     # Remove the user_id from the session if it's there.
-    session.pop('id', None)
-    return redirect(url_for("index"))
+    if id in session:
+        session.pop(id, None)
+        return redirect(url_for("index"))
+    else:
+        return redirect(url_for("index"))
 
+# If any user tries to access to the nonexistent route, render an error page.
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template("page_not_found.html"), 404
+
+if __name__ == "__main__":
+    app.run()
