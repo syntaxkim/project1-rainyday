@@ -127,6 +127,23 @@ def location(location_id):
     
     return render_template("error.html", message="The requested URL was not found on this server."), 404
 
+@app.route("/user/<string:name>")
+def user(name):
+    if session["user_id"][1] == name:
+        locations = db.execute("SELECT * FROM locations WHERE id IN (SELECT location_id FROM checkins WHERE name=:name)",
+            {"name": name}).fetchall()
+        number = db.execute("SELECT COUNT(*) FROM checkins WHERE name=:name",
+            {"name": name}).fetchone()
+        comments = db.execute("SELECT * FROM checkins WHERE name=:name",
+            {"name": name}).fetchall()
+        if not comments:
+            return render_template("comments.html")
+    
+        return render_template("comments.html", number=number, locations=locations, comments=comments)
+
+    else:
+        return render_template("error.html", message="The requested URL was not found on this server."), 404
+
 # If any user tries to access to the nonexistent route, render an error page.
 @app.errorhandler(404)
 def page_not_found(error):
