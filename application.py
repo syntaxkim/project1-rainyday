@@ -70,7 +70,7 @@ def signin():
         if user is None:
             return render_template("error.html", message="Invalid username or password.")
         else:
-            session["user_id"] = db.execute("SELECT id FROM users WHERE name = :name AND password = CRYPT(:password, password)", {"name": name, "password": password}).fetchone()
+            session["user_id"] = db.execute("SELECT id, name FROM users WHERE name = :name AND password = CRYPT(:password, password)", {"name": name, "password": password}).fetchone()
             return redirect(url_for("index"))
     else:
         return render_template("signin.html")
