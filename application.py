@@ -45,7 +45,8 @@ def signup():
             return render_template("error.html", message="Passwords don't match.")
 
         # query for registration a user into the database
-        db.execute("INSERT INTO users (name, password) VALUES (:name, crypt(:password, gen_salt('md5')))", {"name": name, "password": password})
+        db.execute("INSERT INTO users (name, password) VALUES (:name, crypt(:password, gen_salt('md5')))",
+            {"name": name, "password": password})
         db.commit()
 
         return redirect(url_for("welcome"))
@@ -66,13 +67,15 @@ def signin():
         password = request.form.get("password")
 
         # query for signing in
-        user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)", {"name": name, "password": password}).fetchone()
+        user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)",
+            {"name": name, "password": password}).fetchone()
 
         # If user does not exist in the database, send an error message.
         if user is None:
             return render_template("error.html", message="Invalid username or password.")
         else:
-            session["user_id"] = db.execute("SELECT id, name FROM users WHERE name = :name AND password = CRYPT(:password, password)", {"name": name, "password": password}).fetchone()
+            session["user_id"] = db.execute("SELECT id, name FROM users WHERE name = :name AND password = CRYPT(:password, password)",
+                {"name": name, "password": password}).fetchone()
             return redirect(url_for("index"))
     else:
         return render_template("signin.html")
@@ -92,7 +95,8 @@ def signout():
 def search():
     # Get the location info from the user.
     location = '%' + request.form.get("location").upper() + '%'
-    results = db.execute("SELECT * FROM locations WHERE zipcode::varchar LIKE :location OR city LIKE :location", {"location": location}).fetchall()
+    results = db.execute("SELECT * FROM locations WHERE zipcode::varchar LIKE :location OR city LIKE :location",
+        {"location": location}).fetchall()
 
     if not results:
         return render_template("search.html", message="No locations in the database")
