@@ -25,7 +25,7 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    # If a user has logged in,
+    # if a user is logged-in, show search box
     if "user_id" in session:
         return render_template("search.html")
     else:
@@ -35,7 +35,7 @@ def index():
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
-        # Get a name and a password from a user.
+        # Get a name and a password from a user
         name = request.form.get("name")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
@@ -53,7 +53,7 @@ def signup():
     else:
         return render_template("signup.html")
 
-# When a new user has signed up
+# when a new user has signed up
 @app.route("/welcome")
 def welcome():
     return render_template("welcome.html")
@@ -62,7 +62,7 @@ def welcome():
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
     if request.method == "POST":
-        # Get a name and a password from a user.
+        # Get a name and a password from a user
         name = request.form.get("name")
         password = request.form.get("password")
 
@@ -70,7 +70,7 @@ def signin():
         user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)",
             {"name": name, "password": password}).fetchone()
 
-        # If user does not exist in the database, send an error message.
+        # if user does not exist in the database, send an error message
         if user is None:
             return render_template("error.html", message="Invalid username or password.")
         else:
@@ -83,7 +83,7 @@ def signin():
 # Sign out
 @app.route("/signout")
 def signout():
-    # Remove the user_id from the session if it's there.
+    # Remove the user_id from the session if it's there
     if "user_id" in session:
         session.pop("user_id", None)
         return redirect(url_for("index"))
@@ -93,26 +93,31 @@ def signout():
 # Search location
 @app.route("/search", methods=["POST"])
 def search():
-    # Get the location info from the user.
+    # Get a list of locations
     location = '%' + request.form.get("location").upper() + '%'
     results = db.execute("SELECT * FROM locations WHERE zipcode::varchar LIKE :location OR city LIKE :location",
         {"location": location}).fetchall()
 
+    # if no matching location in the database
     if not results:
         return render_template("search.html", message="No locations in the database")
 
+    # if location data exists
     return render_template("search.html", results=results)
 
+# location info
 @app.route("/search/<int:location_id>", methods=["GET", "POST"])
 def location(location_id):
     if "user_id" in session:
+        # if the user submit a comment, commit INSERT query into the database
         if request.method == "POST":
             name = session["user_id"][1]
             comment = request.form.get("comment")
             db.execute("INSERT INTO checkins (name, comment, time, location_id) VALUES (:name, :comment, CURRENT_TIMESTAMP(0), :location_id)",
                 {"name": name, "comment": comment, "location_id": location_id})
             db.commit()
-            
+        
+        # Get the location info and comments
         location = db.execute("SELECT * FROM locations WHERE id = :id",
             {"id": location_id}).fetchone()
         if location is None:
@@ -122,14 +127,16 @@ def location(location_id):
             {"id": location_id}).fetchone()
         comments = db.execute("SELECT * FROM checkins WHERE location_id = :id",
             {"id": location_id}).fetchall()
-            
         return render_template("location.html", location=location, number=number, comments=comments)
     
+    # if the user is not logged-in
     return render_template("error.html", message="The requested URL was not found on this server."), 404
 
+# user's comment list
 @app.route("/user/<string:name>")
 def user(name):
     if session["user_id"][1] == name:
+        # Get a list of comments
         number = db.execute("SELECT COUNT(*) FROM checkins WHERE name=:name",
             {"name": name}).fetchone()
         comments = db.execute("SELECT * FROM checkins WHERE name=:name",
@@ -139,10 +146,11 @@ def user(name):
     
         return render_template("comments.html", number=number, comments=comments)
 
+    # if the user is not logged-in
     else:
         return render_template("error.html", message="The requested URL was not found on this server."), 404
 
-# If any user tries to access to the nonexistent route, render an error page.
+# If any user tries to access to the nonexistent route, render an error page
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template("error.html", message="The requested URL was not found on this server."), 404
