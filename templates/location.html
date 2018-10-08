@@ -15,9 +15,8 @@
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
 
-    <br>
-
     {% if location %}
+    <br>
     <div>
         <h5>Location information</h5>
     </div>
@@ -31,7 +30,15 @@
             <li class="list-group-item">Popuation: {{ location.population }}</li>
         </ul>
     </div>
+
     <br>
+    <div>
+        {% if number %}
+            <h5>The number of comments: {{ number.count }}</h5>
+        {% else %}
+            <h5>No comments on this location yet.</h5>
+        {% endif %}
+    </div>
     <div>
         <ul class="list-group">
             {% for comment in comments %}
@@ -47,15 +54,16 @@
     </div>
     {% endif %}
 
-    <br>
-
     {% set location_id = location.id %}
-    <form action="{{ url_for('location', location_id=location_id) }}" method="POST" id="comment">
-        <div class="form-group">
-            <input class="form-control" name="comment" autocomplete="off" type="text" placeholder="Leave your comment">
-            <small class="form-text text-muted">The maximum length is 100 characters.</small>
-        </div>
-        <button type="submit" class="btn btn-primary">Check in this location</button>
-    </form>
+    <br>
+    <div>
+        <form action="{{ url_for('location', location_id=location_id) }}" method="POST" id="comment">
+            <div class="form-group">
+                <input class="form-control" name="comment" autocomplete="off" type="text" placeholder="Leave your comment">
+                <small class="form-text text-muted">The maximum length is 100 characters.</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Check in this location</button>
+        </form>
+    </div> 
     
 {% endblock %}

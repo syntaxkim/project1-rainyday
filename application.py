@@ -118,10 +118,12 @@ def location(location_id):
         if location is None:
             return render_template("search.html", message="No locations in the database")
 
+        number = db.execute("SELECT COUNT(*) FROM checkins WHERE location_id = :id",
+            {"id": location_id}).fetchone()
         comments = db.execute("SELECT * FROM checkins WHERE location_id = :id",
             {"id": location_id}).fetchall()
-    
-        return render_template("location.html", location=location, comments=comments)
+            
+        return render_template("location.html", location=location, number=number, comments=comments)
     
     return render_template("error.html", message="The requested URL was not found on this server."), 404
 
