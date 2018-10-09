@@ -1,9 +1,10 @@
 import os
 
-from flask import Flask, session, render_template, request, redirect, url_for, escape, json
+from flask import Flask, session, render_template, request, redirect, url_for, escape, json, Markup
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.exc import IntegrityError
 
 # for API request
 import requests
@@ -52,10 +53,15 @@ def signup():
         if password != confirmation:
             return render_template("error.html", message="Passwords don't match.")
 
-        # query for registration a user into the database
-        db.execute("INSERT INTO users (name, password) VALUES (:name, crypt(:password, gen_salt('md5')))",
-            {"name": name, "password": password})
-        db.commit()
+        # If the user name already exists in the database, return an error message.
+        try:
+            db.execute("INSERT INTO users (name, password) VALUES (:name, crypt(:password, gen_salt('md5')))",
+                {"name": name, "password": password})
+            db.commit()
+        except IntegrityError:
+            db.rollback()
+            message = Markup("The name you typed already exists. Please <a href=\"/signup\">sign up</a> again.")
+            return render_template("error.html", message=message)
 
         return render_template("welcome.html")
         
