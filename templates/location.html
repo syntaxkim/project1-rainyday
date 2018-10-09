@@ -61,7 +61,10 @@
             {% set comment_id=comment.id %}
                 <li class="list-group-item">
                     name: {{ comment.name }}, comment: {{ comment.comment }}, {{ comment.time }} (UTC)
-                </li>
+                    <form action="{{ url_for('delete', comment_id=comment_id) }}" method="POST">
+                        <button type="submit" class="btn btn-secondary" name="comment_id" value="{{ comment_id }}">delete</button>
+                    </form>
+            </li>
             {% endfor %}
         </ul>
     </div>

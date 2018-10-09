@@ -185,8 +185,7 @@ def delete():
         db.execute("DELETE FROM checkins WHERE id=:id", {"id": comment_id})
         db.commit()
 
-        name = session["user_id"][1]
-        return redirect(url_for("user", name=name))
+        return redirect(request.referrer)
 
 # API access
 @app.route("/api/location/<int:location_id>")
