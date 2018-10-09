@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, session, render_template, request, redirect, url_for, escape
+from flask import Flask, session, render_template, request, redirect, url_for, escape, jsonify
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -170,6 +170,22 @@ def user(name):
     # if the user is not logged-in
     else:
         return render_template("error.html", message="The requested URL was not found on this server."), 404
+
+# API access
+@app.route("/api/locatoin/<int:location_id>")
+def location_api(location_id):
+    location = db.execute("SELECT * FROM locations WHERE id=:id",
+        {"id":location_id}).fetchall()
+    if location is None:
+        return jsonify({"ERROR": "Invalid location_id"}), 422
+
+    return jsonify({
+        "Zipcode": location.zipcode,
+        "City": location.city,
+        "Latitude": location.lat,
+        "Longitude": location.long,
+        "Population": location.population
+    })
 
 # If any user tries to access to the nonexistent route, render an error page
 @app.errorhandler(404)
