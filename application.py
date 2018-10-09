@@ -132,16 +132,23 @@ def location(location_id):
             return render_template("search.html", message="No locations in the database")
 
         # Get weather data from https://darksky.net
-        res = requests.get(f"https://api.darksky.net/forecast/{api_key}/{location.lat},{location.long}")
+        # other HTTP query parameters options for units: auto, us, si
+        res = requests.get(f"https://api.darksky.net/forecast/{api_key}/{location.lat},{location.long}?units=si")
         data = res.json()
+        time = data["currently"]["time"]
         summary = data["currently"]["summary"]
+        temperature = data["currently"]["temperature"]
+        humidity = (data["currently"]["humidity"])*100
+        pressure = data["currently"]["pressure"]
+        windspeed = data["currently"]["windSpeed"]
 
         # Get comments data
         comments = db.execute("SELECT * FROM checkins WHERE location_id = :id",
             {"id": location_id}).fetchall()
         count = len(comments)
 
-        return render_template("location.html", location=location, summary=summary, comments=comments, count=count)
+        return render_template("location.html", location=location, comments=comments, count=count,
+                                time = time, summary=summary, temperature=temperature, humidity=humidity, pressure=pressure, windspeed=windspeed)
     
     # if the user is not logged-in
     return render_template("error.html", message="The requested URL was not found on this server."), 404
@@ -154,6 +161,7 @@ def user(name):
         comments = db.execute("SELECT * FROM checkins WHERE name=:name",
             {"name": name}).fetchall()
         count = len(comments)
+        
         if not comments:
             return render_template("comments.html")
     

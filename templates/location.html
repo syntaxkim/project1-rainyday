@@ -33,7 +33,17 @@
 
     <br>
     <div>
-        <h5>weather summary: {{ summary }}</h5>
+        <h5>Weather information</h5>
+    </div>
+    <div>
+        <ul class="list-group">
+            <li class="list-group-item">Time: {{ time }}</li>
+            <li class="list-group-item">Summary: {{ summary }}</li>
+            <li class="list-group-item">Temperature: {{ temperature }} &#8451;</li>
+            <li class="list-group-item">Humidity: {{ humidity }} %</li>
+            <li class="list-group-item">Pressure: {{ pressure }} hPa</li>
+            <li class="list-group-item">Wind Speed: {{ windspeed }} m/s</li>
+        </ul>
     </div>
 
 
