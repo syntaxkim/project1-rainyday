@@ -116,7 +116,7 @@ def search():
     return render_template("search.html", results=results)
 
 # location info
-@app.route("/search/<int:location_id>", methods=["GET", "POST"])
+@app.route("/location/<int:location_id>", methods=["GET", "POST"])
 def location(location_id):
     if "user_id" in session:
         # if the user submit a comment, commit INSERT query into the database
