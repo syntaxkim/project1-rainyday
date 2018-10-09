@@ -126,6 +126,7 @@ def location(location_id):
             db.execute("INSERT INTO checkins (name, comment, time, location_id) VALUES (:name, :comment, CURRENT_TIMESTAMP(0), :location_id)",
                 {"name": name, "comment": comment, "location_id": location_id})
             db.commit()
+            return redirect(request.referrer)
         
         # Get geographical data
         location = db.execute("SELECT * FROM locations WHERE id = :id",
