@@ -14,11 +14,16 @@ app = Flask(__name__)
 if not os.getenv("DATABASE_URL"):
     raise RuntimeError("DATABASE_URL is not set")
 
+if not os.getenv("API_SECRET_KEY"):
+    raise RuntimeError("API_SECRET_KEY is not set")
+
 # Configure session to use filesystem
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SECRET_KEY"] = os.urandom(24)
 Session(app)
+
+api_key = os.getenv("API_SECRET_KEY")
 
 # Set up database
 engine = create_engine(os.getenv("DATABASE_URL"))
