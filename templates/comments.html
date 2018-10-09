@@ -12,7 +12,7 @@
             {% set comment_id=comment.id %}
             {% set location_id=comment.location_id %}
                 <li class="list-group-item">
-                    <a href="{{ url_for('location', location_id=location_id) }}">{{ comment.comment }}</a>, {{ comment.time }}
+                    <a href="{{ url_for('location', location_id=location_id) }}">{{ comment.comment }}</a>, {{ comment.time }} (UTC)
                     <form action="{{ url_for('delete', comment_id=comment_id) }}" method="POST">
                         <button type="submit" class="btn btn-secondary" name="comment_id" value="{{ comment_id }}">delete</button>
                     </form>

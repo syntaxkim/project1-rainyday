@@ -177,7 +177,7 @@ def user(name):
     else:
         return redirect(url_for('page_not_found'))
 
-# Delete a comment
+# Delete comments from My comment list
 @app.route("/delete", methods=["POST"])
 def delete():
     if request.method == "POST":
