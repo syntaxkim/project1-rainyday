@@ -57,14 +57,10 @@ def signup():
             {"name": name, "password": password})
         db.commit()
 
-        return redirect(url_for("welcome"))
+        return render_template("welcome.html")
+        
     else:
         return render_template("signup.html")
-
-# when a new user has signed up
-@app.route("/welcome")
-def welcome():
-    return render_template("welcome.html")
 
 # Sign in
 @app.route("/signin", methods=["GET", "POST"])
