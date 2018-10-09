@@ -125,17 +125,24 @@ def location(location_id):
                 {"name": name, "comment": comment, "location_id": location_id})
             db.commit()
         
-        # Get the location info and comments
+        # Get geographical data
         location = db.execute("SELECT * FROM locations WHERE id = :id",
             {"id": location_id}).fetchone()
         if location is None:
             return render_template("search.html", message="No locations in the database")
 
+        # Get weather data from https://darksky.net
+        res = requests.get(f"https://api.darksky.net/forecast/{api_key}/{location.lat},{location.long}")
+        data = res.json()
+        summary = data["currently"]["summary"]
+
+        # Get comments data
         number = db.execute("SELECT COUNT(*) FROM checkins WHERE location_id = :id",
             {"id": location_id}).fetchone()
         comments = db.execute("SELECT * FROM checkins WHERE location_id = :id",
             {"id": location_id}).fetchall()
-        return render_template("location.html", location=location, number=number, comments=comments)
+
+        return render_template("location.html", location=location, summary=summary, number=number, comments=comments)
     
     # if the user is not logged-in
     return render_template("error.html", message="The requested URL was not found on this server."), 404
