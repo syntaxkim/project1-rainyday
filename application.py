@@ -157,7 +157,7 @@ def location(location_id):
                                 time = time, summary=summary, temperature=temperature, humidity=humidity, pressure=pressure, windspeed=windspeed)
     
     # if the user is not logged-in
-    return render_template("error.html", message="The requested URL was not found on this server."), 404
+    return redirect(url_for('page_not_found'))
 
 # user's comment list
 @app.route("/user/<string:name>")
@@ -175,7 +175,7 @@ def user(name):
 
     # if the user is not logged-in
     else:
-        return render_template("error.html", message="The requested URL was not found on this server."), 404
+        return redirect(url_for('page_not_found'))
 
 # Delete a comment
 @app.route("/delete", methods=["POST"])
@@ -187,9 +187,6 @@ def delete():
 
         name = session["user_id"][1]
         return redirect(url_for("user", name=name))
-    
-    else:
-        return render_template("error.html", message="The requested URL was not found on this server."), 404
 
 # API access
 @app.route("/api/location/<int:location_id>")
