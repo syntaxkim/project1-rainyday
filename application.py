@@ -137,12 +137,11 @@ def location(location_id):
         summary = data["currently"]["summary"]
 
         # Get comments data
-        number = db.execute("SELECT COUNT(*) FROM checkins WHERE location_id = :id",
-            {"id": location_id}).fetchone()
         comments = db.execute("SELECT * FROM checkins WHERE location_id = :id",
             {"id": location_id}).fetchall()
+        count = len(comments)
 
-        return render_template("location.html", location=location, summary=summary, number=number, comments=comments)
+        return render_template("location.html", location=location, summary=summary, comments=comments, count=count)
     
     # if the user is not logged-in
     return render_template("error.html", message="The requested URL was not found on this server."), 404
@@ -152,14 +151,13 @@ def location(location_id):
 def user(name):
     if session["user_id"][1] == name:
         # Get a list of comments
-        number = db.execute("SELECT COUNT(*) FROM checkins WHERE name=:name",
-            {"name": name}).fetchone()
         comments = db.execute("SELECT * FROM checkins WHERE name=:name",
             {"name": name}).fetchall()
+        count = len(comments)
         if not comments:
             return render_template("comments.html")
     
-        return render_template("comments.html", number=number, comments=comments)
+        return render_template("comments.html", comments=comments, count=count)
 
     # if the user is not logged-in
     else:
