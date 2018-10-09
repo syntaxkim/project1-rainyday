@@ -27,4 +27,15 @@
         <button type="submit" class="btn btn-primary">Sign up</button>
     </form>
 
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <br>
+        <ul class="list-group">
+            {% for message in messages %}
+                <li class="list-group-item list-group-item-info">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+    
 {% endblock %}

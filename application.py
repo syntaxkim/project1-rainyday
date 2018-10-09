@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, session, render_template, request, redirect, url_for, escape, json, Markup
+from flask import Flask, session, render_template, request, redirect, url_for, escape, json, Markup, flash
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -51,7 +51,8 @@ def signup():
 
         # (additional) server-side confirmation
         if password != confirmation:
-            return render_template("error.html", message="Passwords don't match.")
+            flash("Passwords don't match.")
+            return redirect(request.referrer)
 
         # If the user name already exists in the database, return an error message.
         try:
@@ -60,8 +61,8 @@ def signup():
             db.commit()
         except IntegrityError:
             db.rollback()
-            message = Markup("The name you typed already exists. Please <a href=\"/signup\">sign up</a> again.")
-            return render_template("error.html", message=message)
+            flash("The username already exists. Pick another one.")
+            return redirect(request.referrer)
 
         return render_template("welcome.html")
         
