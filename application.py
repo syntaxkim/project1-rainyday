@@ -5,6 +5,9 @@ from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
+# for API request
+import requests
+
 app = Flask(__name__)
 
 # Check for environment variable
