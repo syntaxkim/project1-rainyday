@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, session, render_template, request, redirect, url_for, escape, jsonify
+from flask import Flask, session, render_template, request, redirect, url_for, escape, json
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -133,7 +133,11 @@ def location(location_id):
 
         # Get weather data from https://darksky.net
         # other HTTP query parameters options for units: auto, us, si
-        res = requests.get(f"https://api.darksky.net/forecast/{api_key}/{location.lat},{location.long}?units=si")
+        res = requests.get(f"https://api.darksky.net/forecast/{api_key}/{location.lat},{location.long}?units=si&exclude=minutely,hourly,daily,alerts,flags")
+
+        if res.status_code != 200:
+            raise Exception("ERROR: API request unsuccessful.")
+
         data = res.json()
         time = data["currently"]["time"]
         summary = data["currently"]["summary"]
@@ -171,15 +175,29 @@ def user(name):
     else:
         return render_template("error.html", message="The requested URL was not found on this server."), 404
 
+# Delete a comment
+@app.route("/delete", methods=["POST"])
+def delete():
+    if request.method == "POST":
+        comment_id = request.form.get("comment_id")
+        db.execute("DELETE FROM checkins WHERE id=:id", {"id": comment_id})
+        db.commit()
+
+        name = session["user_id"][1]
+        return redirect(url_for("user", name=name))
+    
+    else:
+        return render_template("error.html", message="The requested URL was not found on this server."), 404
+
 # API access
-@app.route("/api/locatoin/<int:location_id>")
+@app.route("/api/location/<int:location_id>")
 def location_api(location_id):
     location = db.execute("SELECT * FROM locations WHERE id=:id",
-        {"id":location_id}).fetchall()
+        {"id": location_id}).fetchone()
     if location is None:
-        return jsonify({"ERROR": "Invalid location_id"}), 422
+        return json.jsonify({"ERROR": "Invalid location_id"}), 422
 
-    return jsonify({
+    return json.dumps({
         "Zipcode": location.zipcode,
         "City": location.city,
         "Latitude": location.lat,

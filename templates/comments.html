@@ -9,8 +9,16 @@
         <div>
             <ul>
             {% for comment in comments %}
+            {% set comment_id=comment.id %}
             {% set location_id=comment.location_id %}
-                <li><h5><a href="{{ url_for('location', location_id=location_id) }}">{{ comment.comment }}</a>, {{ comment.time }}</h5></li>
+                <li>
+                    <h5>
+                        <a href="{{ url_for('location', location_id=location_id) }}">{{ comment.comment }}</a>, {{ comment.time }}
+                    </h5>
+                    <form action="{{ url_for('delete', comment_id=comment_id) }}" method="POST">
+                        <button type="submit" class="btn btn-secondary" name="comment_id" value="{{ comment_id }}">delete</button>
+                    </form>
+                </li>
             {% endfor %}
             </ul>
         </div>
