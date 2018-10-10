@@ -27,7 +27,7 @@ Session(app)
 api_key = os.getenv("API_SECRET_KEY")
 
 # Set up database
-engine = create_engine(os.getenv("DATABASE_URL"))
+engine = create_engine(os.getenv("DATABASE_URL"), connect_args={'sslmode': 'require'})
 db = scoped_session(sessionmaker(bind=engine))
 
 # pylint: disable=no-member
