@@ -105,7 +105,7 @@ def signout():
 # Search location
 @app.route("/search", methods=["POST"])
 def search():
-    # Get a list of locations
+    # Capitalize all characters of input value and get a list of locations
     location = '%' + request.form.get("location").upper() + '%'
     results = db.execute("SELECT * FROM locations WHERE zipcode::varchar LIKE :location OR city LIKE :location",
         {"location": location}).fetchall()
@@ -136,7 +136,7 @@ def location(location_id):
         if location is None:
             return render_template("search.html", message="No locations in the database")
 
-        # Get weather data from https://darksky.net
+        # Get weather data from https://darksky.net/dev
         # other HTTP query parameters options for units: auto, us, si
         res = requests.get(f"https://api.darksky.net/forecast/{api_key}/{location.lat},{location.long}?units=si&exclude=minutely,hourly,daily,alerts,flags")
 
