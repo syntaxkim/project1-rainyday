@@ -1,4 +1,24 @@
-$(document).ready(function() {
+/* written in JavaScript */
+document.addEventListener('DOMContentLoaded', () => {
+
+    let form = document.querySelector("#authentication");
+    form.onsubmit = function() {
+
+        if (!form.name.value) {
+            alert("Missing username.");
+            return false;
+        }
+        else if (!form.password.value) {
+            alert("Missing password.");
+            return false;
+        }
+        return true;
+    };
+
+});
+
+/* the same code in jQuery */
+/* $(document).ready(function() {
 
     $("#authentication").submit(function() {
         
@@ -14,4 +34,4 @@ $(document).ready(function() {
         }
         return true;
     });
-});
+}); */

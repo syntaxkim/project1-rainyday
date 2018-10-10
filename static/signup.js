@@ -1,3 +1,4 @@
+/* written in jQuery */
 $(document).ready(function() {
 
     $("#registration").submit(function() {

@@ -1,3 +1,4 @@
+/* written in jQuery */
 $(document).ready(function() {
 
     $("#comment").submit(function() {
@@ -14,4 +15,5 @@ $(document).ready(function() {
         }
         return true;
     });
+    
 });
