@@ -2,6 +2,7 @@
 
 $(document).ready(function() {
 
+    /* If nothing to search */
     $("#search").submit(function() {
         if (!$("#search input[name=location]").val())
         {
@@ -11,6 +12,7 @@ $(document).ready(function() {
         return true;
     });
 
+    /* If no comment to submit */
     $("#comment").submit(function() {
         if (!$("#comment input[name=comment]").val())
         {
@@ -25,6 +27,7 @@ $(document).ready(function() {
         return true;
     });
     
+    /* Confirm before deleteion of a comment */
     $(".delete").submit(function() {
         let answer = confirm('Are your sure you want to delete this comment?');
         if (answer)
@@ -34,10 +37,5 @@ $(document).ready(function() {
             return false;
         }
     });
-
-    /* $(".delete").submit(function () {
-        alert("hi");
-        return true;
-    }); */
 
 });

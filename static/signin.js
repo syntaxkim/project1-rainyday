@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    /* Make sure a username or password is submitted */
     let form = document.querySelector("#authentication");
     form.onsubmit = function() {
 

@@ -2,6 +2,7 @@
 
 $(document).ready(function() {
 
+    /* Make sure all information is correct before request to server */
     $("#registration").submit(function() {
 
         if (!$("#registration input[name=name]").val())
