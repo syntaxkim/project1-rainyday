@@ -2,57 +2,61 @@
 
 {% block body %}
 
-<div>
-    <h1>API Overview</h1>
-</div>
-<br>
-<div>
-    <div><h3>Location Request</h3></div>
-    <div class="card">
-        <div class="card-body">http://[address]/api/location/[zipcode]</div>
-    </div>
-    <div>
-        A Location Request returns the location's name, coordinates, population and ZIP code.
-    </div>
-    <div>
-        If you don't know the ZIP code, just simply <a href="{{ url_for('signin') }}">log in</a> and search your location.
-    </div>
-    <br>
-    <div><h3>Example Request</h3></div>
-    <div class="card">
-        <div class="card-body">http://[address]/api/location/10002
-            <pre>
-
-                {
-                    "City": "NEW YORK", 
-                    "Latitude": 40.71, 
-                    "Longitude": -73.99, 
-                    "Population": 81410, 
-                    "Zipcode": 10002
-                }
-            </pre>
-        </div>
-    </div>
-    <br>
-    <div><h3>Notes</h3>
+<div class="row justify-content-md-center">
+    <div class="col-lg-10 col-sm-12">
         <div>
-            <ul>
-                <li>
-                    API responses consist of a UTF-8-encoded, JSON-formatted object
-                </li>
-                <li>
-                    As I only have location data of United States for now,<br>
-                    <strong>I'm working for getting South Korea's data as well.</strong>
-                </li>
-                <li>
-                    Since my database has limited access, I politely ask you not to make excessive API requests.
-                </li>
-                <li>
-                    The original database sourcefile is on
-                    <a href="https://github.com/syntaxkim/project1/blob/master/zips.zip" target="_blank">my github project1 repostitory</a>.<br>
-                    I compressed the file to prevent from unwanted loading thousands of rows.
-                </li>
-            </ul>
+            <h1>API Overview</h1>
+        </div>
+        <br>
+        <div>
+            <div><h3>Location Request</h3></div>
+            <div class="card">
+                <div class="card-body">http://[address]/api/location/[zipcode]</div>
+            </div>
+            <div>
+                A Location Request returns the location's name, coordinates, population and ZIP code.
+            </div>
+            <div>
+                If you don't know the ZIP code, just simply <a href="{{ url_for('signin') }}">log in</a> and search your location.
+            </div>
+            <br>
+            <div><h3>Example Request</h3></div>
+            <div class="card">
+                <div class="card-body">http://[address]/api/location/10002
+                    <pre>
+                        
+    {
+        "City": "NEW YORK", 
+        "Latitude": 40.71, 
+        "Longitude": -73.99, 
+        "Population": 81410, 
+        "Zipcode": 10002
+    }
+                    </pre>
+                </div>
+            </div>
+            <br>
+            <div><h3>Notes</h3>
+                <div>
+                    <ul>
+                        <li>
+                            API responses consist of a UTF-8-encoded, JSON-formatted object
+                        </li>
+                        <li>
+                            As I only have location data of United States for now,<br>
+                            <strong>I'm working for getting South Korea's data as well.</strong>
+                        </li>
+                        <li>
+                            Since my database has limited access, I politely ask you not to make excessive API requests.
+                        </li>
+                        <li>
+                            The original database sourcefile is on my
+                            <a href="https://github.com/syntaxkim/project1/blob/master/zips.zip" target="_blank">github project1 repostitory</a>.<br>
+                            I compressed the file to prevent from unwanted loading thousands of rows.
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>

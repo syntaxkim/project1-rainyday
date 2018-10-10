@@ -15,41 +15,45 @@
 </head>
 <body>
     <!-- navbar -->
-    <div class="navbar navbar-lightgrey bg-light">
-        <h1><a href="/">Rainy Day</a></h1>
-        <div>
-            <a href="https://github.com/syntaxkim/project1" target="_blank">GitHub</a>
-        </div>
-        {% if not "user_id" in session %}
-            <div>
-                <a href="{{ url_for('signup') }}">Sign up</a>
-            </div>
-            <div>
-                <a href="{{ url_for('signin') }}">Sign in</a>
-            </div>
-        {% else %}
-            <div>
-                <strong>{{ session["user_id"][1] }}</strong> is currently logged-in
-            </div>
-            <div>
-                <a href="{{ url_for('signout') }}">Sign out</a>
-            </div>
-            <div>
+    <div>
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <h5><a class="nav-link" href="/">Rainy Day</a></h5>
+            </li>
+            <li class="nav-item">
+                <h5><a class="nav-link" href="https://github.com/syntaxkim/project1" target="_blank">GitHub</a></h5>
+            </li>
+            <li class="nav-item">
+                <h5><a class="nav-link" href="{{ url_for('api') }}">API</a></h5>
+            </li>
+            {% if not "user_id" in session %}
+            <li class="nav-item">
+                <h5><a class="nav-link" href="{{ url_for('signup') }}">Sign up</a></h5>
+            </li>
+            <li class="nav-item">
+                <h5><a class="nav-link" href="{{ url_for('signin') }}">Sign in</a></h5>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <h5><a class="nav-link disabled"><strong>{{ session["user_id"][1] }}</strong> is currently logged-in</a></h5>
+            </li>
+            <li class="nav-item">
+                <h5><a class="nav-link" href="{{ url_for('signout') }}">Sign out</a></h5>
+            </li>
+            <li class="nav-item">
                 {% set name = session["user_id"][1] %}
-                <a href="{{ url_for('user', name=name) }}">My comment list</a>
-            </div>
-        {% endif %}
-        <div>
-            <a href="{{ url_for('api') }}">API</a>
-        </div>
+                <h5><a class="nav-link" href="{{ url_for('user', name=name) }}">My comment list</a></h5>
+            </li>
+            {% endif %}
+        </ul>
     </div>
 
     <br><br>
 
     <!-- container -->
     <div class="container">
-        {% block body %}
-        {% endblock %}
+            {% block body %}
+            {% endblock %}
     </div>
 
     <br><br>

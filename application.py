@@ -83,7 +83,7 @@ def signin():
 
         # if the matching user does not exist in the database, send an error message
         if user is None:
-            flash("The username or password is wrong. Please sing in again.")
+            flash("The username or password is wrong. Please sign in again.")
             return redirect(request.referrer)
         else:
             session["user_id"] = db.execute("SELECT id, name FROM users WHERE name = :name AND password = CRYPT(:password, password)",
@@ -216,4 +216,4 @@ def page_not_found(error):
     return render_template("error.html", message="The requested URL was not found on this server."), 404
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')
