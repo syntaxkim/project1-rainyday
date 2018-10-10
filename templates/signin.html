@@ -6,6 +6,7 @@
 
 {% block body %}
 
+<div>
     <h3>Sign in</h3>
     <br>
     <form action="{{ url_for('signin') }}" id="authentication" method="POST">
@@ -21,5 +22,10 @@
         </div>
         <button type="submit" class="btn btn-primary">Sign in</button>
     </form>
+</div>
+<br>
+<div>
+    If you don't have an account yet, <a href="{{ url_for('signup') }}">sign up</a> on our website.
+</div>
 
 {% endblock %}
