@@ -6,6 +6,7 @@
 
 {% block body %}
 
+<div>
     <form action="{{ url_for('search') }}" method="POST" id="search">
         <div class="form-group">
             <label><h5>Search your locations</h5></label>
@@ -14,30 +15,46 @@
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
+</div>
 
-    <br>
+<br>
 
-    {% if results %}
+<div class="text-center card">
+    <div class="card-body">
+        <p class="card-text">
+            As I only have location data of United States for now,<br>
+            I'm working for getting South Korea's data as well.<br>
+            I politely ask for your understanding.
+        </p>
+        <p class="card-text">
+            프로젝트 시작에 앞서 미국의 장소 데이터만을 갖고 개발했습니다.<br>
+            한국의 모든 도시들의 좌표와 주소가 정리되어 있는 DB도 만들고 있으니,<br>
+            깊은 양해 부탁드립니다.
+        </p>
+    </div>
+</div>
+
+{% if results %}
     <div>
         <h5>Search results</h5>
     </div>
     <div>
         <ul class="list-group">
-            {% for result in results %}
-                <li class="list-group-item">
-                    <a href="{{ url_for('location', location_id=result.id) }}">
-                        Zipcode: {{ result.zipcode }}, City: {{ result.city }}, State Codes: {{ result.state }}
-                    </a>
-                </li>
-            {% endfor %}
+        {% for result in results %}
+            <li class="list-group-item">
+                <a href="{{ url_for('location', location_id=result.id) }}">
+                    Zipcode: {{ result.zipcode }}, City: {{ result.city }}, State Codes: {{ result.state }}
+                </a>
+            </li>
+        {% endfor %}
         </ul>
     </div>
-    {% else %}
+{% else %}
     <div>
         <ul class="list-group">
             {{ message }}
         </ul>
     </div>
-    {% endif %}
+{% endif %}
 
 {% endblock %}

@@ -6,86 +6,90 @@
 
 {% block body %}
 
+<div>
     <form action="{{ url_for('search') }}" method="POST" id="search">
         <div class="form-group">
-            <label>Search your locations</label>
+            <label><h5>Search your locations</h5></label>
             <input class="form-control" name="location" autofocus autocomplete="off" type="text" placeholder="ZIP Code or city name">
             <small class="form-text text-muted"></small>
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
+</div>
 
-    {% if location %}
-    <br>
-    <div>
-        <h5>Location information</h5>
-    </div>
-    <div>
-        <ul class="list-group">
-            <li class="list-group-item">Zipcode: {{ location.zipcode }}</li>
-            <li class="list-group-item">City: {{ location.city }}</li>
-            <li class="list-group-item">State Code: {{ location.state }}</li>
-            <li class="list-group-item">Latitude: {{ location.lat }}</li>
-            <li class="list-group-item">Longitude: {{ location.long }}</li>
-            <li class="list-group-item">Popuation: {{ location.population }}</li>
-        </ul>
-    </div>
+<br>
 
-    <br>
-    <div>
-        <h5>Weather information</h5>
-    </div>
-    <div>
-        <ul class="list-group">
-            <li class="list-group-item">Time: {{ time }}</li>
-            <li class="list-group-item">Summary: {{ summary }}</li>
-            <li class="list-group-item">Temperature: {{ temperature }} &#8451;</li>
-            <li class="list-group-item">Humidity: {{ humidity }} %</li>
-            <li class="list-group-item">Pressure: {{ pressure }} hPa</li>
-            <li class="list-group-item">Wind Speed: {{ windspeed }} m/s</li>
-        </ul>
-    </div>
+<div>
+    <h5>Location information</h5>
+</div>
+<div>
+    <ul class="list-group">
+        <li class="list-group-item">Zipcode: {{ location.zipcode }}</li>
+        <li class="list-group-item">City: {{ location.city }}</li>
+        <li class="list-group-item">State Code: {{ location.state }}</li>
+        <li class="list-group-item">Latitude: {{ location.lat }}</li>
+        <li class="list-group-item">Longitude: {{ location.long }}</li>
+        <li class="list-group-item">Popuation: {{ location.population }}</li>
+    </ul>
+</div>
 
+<br>
 
-    <br>
-    <div>
-        {% if count %}
-            <h5>The number of comments: {{ count }}</h5>
-        {% else %}
-            <h5>No comments on this location yet.</h5>
-        {% endif %}
-    </div>
-    <div>
-        <ul class="list-group">
-            {% for comment in comments %}
-            {% set comment_id=comment.id %}
-                <li class="list-group-item">
-                    name: {{ comment.name }}, comment: {{ comment.comment }}, {{ comment.time }} (UTC)
-                    <form action="{{ url_for('delete', comment_id=comment_id) }}" method="POST" class="delete">
-                        <button type="submit" class="btn btn-secondary" name="comment_id" value="{{ comment_id }}">delete</button>
-                    </form>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+<div>
+    <h5>Weather information</h5>
+</div>
+<div>
+    <ul class="list-group">
+        <li class="list-group-item">Time: {{ time }}</li>
+        <li class="list-group-item">Summary: {{ summary }}</li>
+        <li class="list-group-item">Temperature: {{ temperature }} &#8451;</li>
+        <li class="list-group-item">Humidity: {{ humidity }} %</li>
+        <li class="list-group-item">Pressure: {{ pressure }} hPa</li>
+        <li class="list-group-item">Wind Speed: {{ windspeed }} m/s</li>
+    </ul>
+</div>
+
+<br>
+
+<div>
+    {% if count %}
+        <h5>The number of comments: {{ count }}</h5>
     {% else %}
+        <h5>No comments on this location yet.</h5>
+    {% endif %}
+</div>
+<div>
+    <ul class="list-group">
+        {% for comment in comments %}
+        {% set comment_id=comment.id %}
+            <li class="list-group-item">
+                name: {{ comment.name }}, comment: {{ comment.comment }}, {{ comment.time }} (UTC)
+                <form action="{{ url_for('delete', comment_id=comment_id) }}" method="POST" class="delete">
+                    <button type="submit" class="btn btn-secondary" name="comment_id" value="{{ comment_id }}">delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% if not location %}
     <div>
         <ul class="list-group">
             {{ message }}
         </ul>
     </div>
-    {% endif %}
+{% endif %}
 
-    {% set location_id = location.id %}
-    <br>
-    <div>
-        <form action="{{ url_for('location', location_id=location_id) }}" method="POST" id="comment">
-            <div class="form-group">
-                <input class="form-control" name="comment" autocomplete="off" type="text" placeholder="Leave your comment">
-                <small class="form-text text-muted">The maximum length is 100 characters.</small>
-            </div>
-            <button type="submit" class="btn btn-primary">Check in this location</button>
-        </form>
-    </div> 
+{% set location_id = location.id %}
+<br>
+<div>
+    <form action="{{ url_for('location', location_id=location_id) }}" method="POST" id="comment">
+        <div class="form-group">
+            <input class="form-control" name="comment" autocomplete="off" type="text" placeholder="Leave your comment">
+            <small class="form-text text-muted">The maximum length is 100 characters.</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Check in this location</button>
+    </form>
+</div> 
     
 {% endblock %}

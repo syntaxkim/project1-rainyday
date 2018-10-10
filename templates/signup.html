@@ -29,18 +29,18 @@
     </form>
 </div>
 
+<br>
+
 {% with messages = get_flashed_messages() %}
 {% if messages %}
-    <br>
     <div>
         <ul class="list-group">
         {% for message in messages %}
-            <li class="list-group-item list-group-item-info">{{ message }}</li>
+            <li class="list-group-item list-group-item-warning">{{ message }}</li>
         {% endfor %}
         </ul>
     </div>
 {% endif %}
 {% endwith %}
-    
     
 {% endblock %}

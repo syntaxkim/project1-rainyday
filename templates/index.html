@@ -2,8 +2,33 @@
 
 {% block body %}
 
-<div>
-    <h3 class="text-center">You need to <a href='/signin'>sign in</a> to search location.</h3>
+<div class="text-center">
+    <h1>Project 1 - Rainy Day</h1>
+</div>
+
+<br>
+
+<div class="text-center">
+    <div>
+        Query for basic information about cities and towns<br>
+        in United States as well as weather information.<br>
+        You can leave a comment on every location.<br>
+        You are also able to query for location data via website's <a href="{{ url_for('api') }}">API</a> access.
+    </div>
+    <br>
+    <div>
+        미국에 있는 도시와 지역을 검색하고<br>
+        지역 정보와 현재 날씨 정보를 알 수 있습니다.<br>
+        각 지역마다 직접 코멘트를 생성할 수 있으며,<br>
+        지역 정보에 대한 데이터를 <a href="{{ url_for('api') }}">API</a>를 통해 제공하고 있습니다.
+    </div>
+</div>
+
+
+<br>
+
+<div class="text-center">
+    <h5>You need to <a href='/signin'>sign in</a> to search location.</h5>
 </div>
 
 {% endblock %}

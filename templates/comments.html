@@ -7,27 +7,28 @@
 {% block body %}
 
     {% if comments %}
-        <div>
-            <h5>You have {{ count }} comment(s).</h5>
-        </div>
-        <div>
-            <ul>
-            {% for comment in comments %}
-            {% set comment_id=comment.id %}
-            {% set location_id=comment.location_id %}
-                <li class="list-group-item">
-                    <a href="{{ url_for('location', location_id=location_id) }}">{{ comment.comment }}</a>, {{ comment.time }} (UTC)
-                    <form action="{{ url_for('delete', comment_id=comment_id) }}" method="POST" class="delete">
-                        <button type="submit" class="btn btn-secondary" name="comment_id" value="{{ comment_id }}">delete</button>
-                    </form>
-                </li>
-            {% endfor %}
-            </ul>
-        </div>
+    <div>
+        <h5>You have {{ count }} comment(s).</h5>
+    </div>
+    <div>
+        <ul>
+        {% for comment in comments %}
+        {% set comment_id=comment.id %}
+        {% set location_id=comment.location_id %}
+            <li class="list-group-item">
+                <a href="{{ url_for('location', location_id=location_id) }}">
+                    {{ comment.comment }}</a>, {{ comment.time }} (UTC)
+                <form action="{{ url_for('delete', comment_id=comment_id) }}" method="POST" class="delete">
+                    <button type="submit" class="btn btn-secondary" name="comment_id" value="{{ comment_id }}">delete</button>
+                </form>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
     {% else %}
-        <div>
-            <h5>You have no comment.</h5>
-        </div>
+    <div>
+        <h5>You have no comment.</h5>
+    </div>
     {% endif %}
 
 {% endblock %}
