@@ -1,4 +1,4 @@
-# Project 1
+# Project 1 - Rainy Day
 
 Query for basic information about cities and towns in United States as well as weather information.\
 You can leave a comment on every location.\
@@ -14,6 +14,12 @@ I politely ask for your understanding.
 프로젝트 시작에 앞서 미국의 장소 데이터만을 갖고 개발했습니다.\
 한국의 모든 도시들의 좌표와 주소가 정리되어 있는 DB도 만들고 있으니,\
 깊은 양해 부탁드립니다.
+
+Only raw SQL is used instead of using ORM-like syntax to understand and get a lot more sense of SQL itself.\
+ORM will be used in Project 2.
+
+SQL 자체의 대한 이해와 숙달을 위해 ORM 문법이 아닌 순 SQL을 사용하여 구현했습니다.\
+ORM은 Project 2 에서 사용할 것입니다.
 
 ### Sign up and log in to search location
 To search location, you are required to sign in. If you don't have one, just simply make a new username.\
@@ -46,8 +52,6 @@ http://[address]/api/location/10002
     }
 
 ```
-
-
 ### Notes
 Connecting to the database over SSL is required. So make sure your client environment use an SSL connection.
 
