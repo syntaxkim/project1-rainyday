@@ -18,7 +18,7 @@ ORM will be used in Project 2.
 한국의 모든 도시들의 좌표와 주소가 정리되어 있는 DB도 만들고 있으니,\
 깊은 양해 부탁드립니다.
 
-SQL 자체의 대한 이해와 숙달을 위해 ORM 문법이 아닌 순 SQL을 사용하여 구현했습니다.\
+SQL 자체의 대한 이해와 숙달을 위해 ORM 문법이 아닌 순 SQL 만을 사용하여 구현했습니다.\
 ORM은 Project 2 에서 사용할 것입니다.
 
 ### Sign up and log in to search location
