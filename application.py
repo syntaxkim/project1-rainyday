@@ -189,6 +189,10 @@ def delete():
 
         return redirect(request.referrer)
 
+@app.route("/api")
+def api():
+    return render_template("api.html")
+
 # API access
 @app.route("/api/location/<int:zipcode>")
 def location_api(zipcode):
