@@ -81,9 +81,10 @@ def signin():
         user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)",
             {"name": name, "password": password}).fetchone()
 
-        # if user does not exist in the database, send an error message
+        # if the matching user does not exist in the database, send an error message
         if user is None:
-            return render_template("error.html", message="Invalid username or password.")
+            flash("The username or password is wrong. Please sing in again.")
+            return redirect(request.referrer)
         else:
             session["user_id"] = db.execute("SELECT id, name FROM users WHERE name = :name AND password = CRYPT(:password, password)",
                 {"name": name, "password": password}).fetchone()

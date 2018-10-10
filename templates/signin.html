@@ -23,9 +23,23 @@
         <button type="submit" class="btn btn-primary">Sign in</button>
     </form>
 </div>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <br>
+    <div>
+        <ul class="list-group">
+        {% for message in messages %}
+            <li class="list-group-item list-group-item-info">{{ message }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+{% endwith %}
+
 <br>
 <div>
-    If you don't have an account yet, <a href="{{ url_for('signup') }}">sign up</a> on our website.
+    If you don't have an account yet, please <a href="{{ url_for('signup') }}">sign up</a> on our website.
 </div>
 
 {% endblock %}

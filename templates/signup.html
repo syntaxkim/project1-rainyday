@@ -6,6 +6,7 @@
 
 {% block body %}
 
+<div>
     <h3>Registration</h3>
     <br>
     <form action="{{ url_for('signup') }}" id="registration" method="POST">
@@ -26,16 +27,20 @@
         </div>
         <button type="submit" class="btn btn-primary">Sign up</button>
     </form>
+</div>
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <br>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <br>
+    <div>
         <ul class="list-group">
-            {% for message in messages %}
-                <li class="list-group-item list-group-item-info">{{ message }}</li>
-            {% endfor %}
+        {% for message in messages %}
+            <li class="list-group-item list-group-item-info">{{ message }}</li>
+        {% endfor %}
         </ul>
-        {% endif %}
-    {% endwith %}
+    </div>
+{% endif %}
+{% endwith %}
+    
     
 {% endblock %}
