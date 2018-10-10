@@ -8,6 +8,7 @@ from sqlalchemy.exc import IntegrityError
 
 # for API request
 import requests
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -144,7 +145,10 @@ def location(location_id):
             raise Exception("ERROR: API request unsuccessful.")
 
         data = res.json()
-        time = data["currently"]["time"]
+        
+        # Convert UNIX timestamp from API request to string timestamp
+        time = datetime.fromtimestamp(data["currently"]["time"])
+
         summary = data["currently"]["summary"]
         temperature = data["currently"]["temperature"]
         humidity = (data["currently"]["humidity"])*100
