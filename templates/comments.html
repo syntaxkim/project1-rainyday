@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% block heading %}
+    <script src="{{ url_for('static', filename='location.js') }}"></script>
+{% endblock %}
+
 {% block body %}
 
     {% if comments %}
@@ -13,7 +17,7 @@
             {% set location_id=comment.location_id %}
                 <li class="list-group-item">
                     <a href="{{ url_for('location', location_id=location_id) }}">{{ comment.comment }}</a>, {{ comment.time }} (UTC)
-                    <form action="{{ url_for('delete', comment_id=comment_id) }}" method="POST">
+                    <form action="{{ url_for('delete', comment_id=comment_id) }}" method="POST" class="delete">
                         <button type="submit" class="btn btn-secondary" name="comment_id" value="{{ comment_id }}">delete</button>
                     </form>
                 </li>

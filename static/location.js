@@ -26,10 +26,13 @@ $(document).ready(function() {
     });
     
     $(".delete").submit(function() {
-        confirm({
-            title: 'Confirmation',
-            content: 'Are your sure you want to delete this comment?'
-        });
+        let answer = confirm('Are your sure you want to delete this comment?');
+        if (answer)
+        {
+            return true;
+        } else {
+            return false;
+        }
     });
 
     /* $(".delete").submit(function () {
