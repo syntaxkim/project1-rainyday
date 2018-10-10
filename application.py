@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, session, render_template, request, redirect, url_for, escape, json, flash
+from flask import Flask, session, render_template, request, redirect, url_for, escape, jsonify, flash
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -190,14 +190,14 @@ def delete():
         return redirect(request.referrer)
 
 # API access
-@app.route("/api/location/<int:location_id>")
-def location_api(location_id):
-    location = db.execute("SELECT * FROM locations WHERE id=:id",
-        {"id": location_id}).fetchone()
+@app.route("/api/location/<int:zipcode>")
+def location_api(zipcode):
+    location = db.execute("SELECT * FROM locations WHERE zipcode=:zipcode",
+        {"zipcode": zipcode}).fetchone()
     if location is None:
-        return json.jsonify({"ERROR": "Invalid location_id"}), 422
+        return jsonify({"ERROR": "Invalid zipcode"}), 422
 
-    return json.dumps({
+    return jsonify({
         "Zipcode": location.zipcode,
         "City": location.city,
         "Latitude": location.lat,
