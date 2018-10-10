@@ -6,7 +6,7 @@
 
 {% block body %}
 
-    <form action="{{ url_for('search') }}" method="POST">
+    <form action="{{ url_for('search') }}" method="POST" id="search">
         <div class="form-group">
             <label>Search your locations</label>
             <input class="form-control" name="location" autofocus autocomplete="off" type="text" placeholder="ZIP Code or city name">
@@ -61,7 +61,7 @@
             {% set comment_id=comment.id %}
                 <li class="list-group-item">
                     name: {{ comment.name }}, comment: {{ comment.comment }}, {{ comment.time }} (UTC)
-                    <form action="{{ url_for('delete', comment_id=comment_id) }}" method="POST">
+                    <form action="{{ url_for('delete', comment_id=comment_id) }}" method="POST" class="delete">
                         <button type="submit" class="btn btn-secondary" name="comment_id" value="{{ comment_id }}">delete</button>
                     </form>
                 </li>

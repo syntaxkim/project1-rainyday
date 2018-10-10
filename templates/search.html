@@ -1,8 +1,12 @@
 {% extends "layout.html" %}
 
+{% block heading %}
+    <script src="{{ url_for('static', filename='location.js') }}"></script>
+{% endblock %}
+
 {% block body %}
 
-    <form action="{{ url_for('search') }}" method="POST">
+    <form action="{{ url_for('search') }}" method="POST" id="search">
         <div class="form-group">
             <label>Search your locations</label>
             <input class="form-control" name="location" autofocus autocomplete="off" type="text" placeholder="ZIP Code or city name">

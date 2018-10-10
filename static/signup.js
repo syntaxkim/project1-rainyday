@@ -1,4 +1,5 @@
-/* written in jQuery */
+/* This JavaScript code is written in jQuery */
+
 $(document).ready(function() {
 
     $("#registration").submit(function() {
@@ -35,4 +36,5 @@ $(document).ready(function() {
         }
         return true;
     });
+    
 });
