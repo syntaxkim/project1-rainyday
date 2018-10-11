@@ -8,13 +8,18 @@
 
 <div class="row justify-content-md-center">
     <div class="col-lg-10 col-sm-12">
+
+        <!-- info section -->
         <div>
         {% if comments %}
             <h5>You have {{ count }} comment(s).</h5>
+            <p>Click the comment to go to that location.</p>
         {% else %}
             <h5>You have no comment.</h5>
         {% endif %}
         </div>
+
+        <!-- comments section -->
         <div>
             <ul class="list-group">
             {% for comment in comments %}
@@ -30,6 +35,7 @@
             {% endfor %}
             </ul>
         </div>
+        
     </div>
 </div>
 
