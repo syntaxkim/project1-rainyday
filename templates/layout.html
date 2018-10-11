@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width", initial-scale=1>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='style.css') }}">
 
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Project 1 - Rainy Day</title>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <title>Rainy Day</title>
 
     {% block heading %}
     {% endblock %}
-    
+
 </head>
 <body>
     <!-- navbar -->
-    <div>
+    <div id="navbar">
         <ul class="nav justify-content-center">
             <li class="nav-item">
                 <h5><a class="nav-link" href="/">Rainy Day</a></h5>
@@ -50,14 +54,15 @@
 
     <br><br>
 
-    <!-- container -->
-    <div class="container">
-            {% block body %}
-            {% endblock %}
+    <!-- container-body -->
+    <div id="container" class="container">
+        {% block body %}
+        {% endblock %}
     </div>
 
     <br><br>
     
+    <!-- footer -->
     <footer id="footer" class="container-fluid card-footer text-center">
         Weather data API source - <a href="https://darksky.net/dev" target="_blank">Dark Sky API</a>
     </footer>

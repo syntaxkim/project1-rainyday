@@ -4,7 +4,10 @@ from flask import Flask, session, render_template, request, redirect, url_for, e
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy.exc import IntegrityError
+
+# Two ways to handle errors
+from sqlalchemy.exc import IntegrityError, OperationalError
+from werkzeug.exceptions import BadRequest
 
 # for API request
 import requests
@@ -214,10 +217,20 @@ def location_api(zipcode):
         "Population": location.population
     })
 
+# bad request
+@app.errorhandler(BadRequest)
+def handle_bad_request(error):
+    return 'bad request!', 400
+
 # If any user tries to access to the nonexistent route, render an error page
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template("error.html", message="The requested URL was not found on this server."), 404
+
+# internal server error
+@app.errorhandler(500)
+def server_error_handler(error):
+    return render_template("error.html", message="Database connection failed. Please reload the page."), 500
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
