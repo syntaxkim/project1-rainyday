@@ -38,11 +38,11 @@
             </li>
             {% else %}
             <li class="nav-item">
-                <h5><a class="nav-link text-light" href="{{ url_for('signout') }}">Sign out</a></h5>
-            </li>
-            <li class="nav-item">
                 {% set name = session["user_id"][1] %}
                 <h5><a class="nav-link text-light" href="{{ url_for('user', name=name) }}">My comment list</a></h5>
+            </li>
+            <li class="nav-item">
+                <h5><a class="nav-link text-light" href="{{ url_for('signout') }}">Sign out</a></h5>
             </li>
             <li class="nav-item">
                 <h5><a class="nav-link text-light disabled">User: <strong>{{ session["user_id"][1] }}</strong></a></h5>
