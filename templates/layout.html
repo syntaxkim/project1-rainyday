@@ -19,36 +19,42 @@
 <body>
     <!-- navbar -->
     <div id="navbar">
-        <ul class="nav justify-content-center d-flex align-items-center bg-dark pt-1 pb-1">
-            <li class="nav-item">
-                <a class="nav-link text-light" href="/">Rainy Day</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light" href="https://github.com/syntaxkim/project1" target="_blank">GitHub</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light" href="{{ url_for('api') }}">API</a>
-            </li>
-            {% if not "user_id" in session %}
-            <li class="nav-item">
-                <a class="nav-link text-light" href="{{ url_for('signup') }}">Sign up</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light" href="{{ url_for('signin') }}">Sign in</a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-                {% set name = session["user_id"][1] %}
-                <a class="nav-link text-light" href="{{ url_for('user', name=name) }}">My comment list</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light" href="{{ url_for('signout') }}">Sign out</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light disabled">User: <strong>{{ session["user_id"][1] }}</strong></a>
-            </li>
-            {% endif %}
-        </ul>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-sm-12">
+                    <ul class="nav d-flex justify-content-around align-items-center pt-1 pb-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/">Rainy Day</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="https://github.com/syntaxkim/project1" target="_blank">GitHub</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{{ url_for('api') }}">API</a>
+                        </li>
+                        {% if not "user_id" in session %}
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{{ url_for('signup') }}">Sign up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{{ url_for('signin') }}">Sign in</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            {% set name = session["user_id"][1] %}
+                            <a class="nav-link text-light" href="{{ url_for('user', name=name) }}">My comment list</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{{ url_for('signout') }}">Sign out</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light disabled">User: <span id="username">{{ session["user_id"][1] }}</span></a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- container-body -->
