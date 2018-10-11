@@ -5,9 +5,9 @@ from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-# Two ways to handle errors
+# Error handlers
 from sqlalchemy.exc import IntegrityError, OperationalError
-from werkzeug.exceptions import BadRequest
+from werkzeug.routing import BuildError
 
 # for API request
 import requests
@@ -82,8 +82,12 @@ def signin():
         password = request.form.get("password")
 
         # query for signing in
-        user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)",
-            {"name": name, "password": password}).fetchone()
+        try:
+            user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)",
+                {"name": name, "password": password}).fetchone()
+        except OperationalError:
+            db.rollback()
+            return redirect(url_for("server_error_handler"))
 
         # if the matching user does not exist in the database, send an error message
         if user is None:
@@ -111,8 +115,12 @@ def signout():
 def search():
     # Capitalize all characters of input value and get a list of locations
     location = '%' + request.form.get("location").upper() + '%'
-    results = db.execute("SELECT * FROM locations WHERE zipcode::varchar LIKE :location OR city LIKE :location",
-        {"location": location}).fetchall()
+    try:
+        results = db.execute("SELECT * FROM locations WHERE zipcode::varchar LIKE :location OR city LIKE :location",
+            {"location": location}).fetchall()
+    except OperationalError:
+        db.rollback()
+        return redirect(url_for("server_error_handler"))
 
     # if no matching location in the database
     if not results:
@@ -129,14 +137,24 @@ def location(location_id):
         if request.method == "POST":
             name = session["user_id"][1]
             comment = request.form.get("comment")
-            db.execute("INSERT INTO checkins (name, comment, time, location_id) VALUES (:name, :comment, CURRENT_TIMESTAMP(0), :location_id)",
-                {"name": name, "comment": comment, "location_id": location_id})
-            db.commit()
+            try:
+                db.execute("INSERT INTO checkins (name, comment, time, location_id) VALUES (:name, :comment, CURRENT_TIMESTAMP(0), :location_id)",
+                    {"name": name, "comment": comment, "location_id": location_id})
+                db.commit()
+            except OperationalError:
+                db.rollback()
+                return redirect(url_for("server_error_handler"))
+
             return redirect(request.referrer)
         
         # Get geographical data
-        location = db.execute("SELECT * FROM locations WHERE id = :id",
-            {"id": location_id}).fetchone()
+        try:
+            location = db.execute("SELECT * FROM locations WHERE id = :id",
+                {"id": location_id}).fetchone()
+        except OperationalError:
+            db.rollback()
+            return redirect(url_for("server_error_handler"))
+
         if location is None:
             return render_template("search.html", message="No locations in the database")
 
@@ -159,9 +177,13 @@ def location(location_id):
         windspeed = data["currently"]["windSpeed"]
 
         # Get comments data
-        comments = db.execute("SELECT * FROM checkins WHERE location_id = :id",
-            {"id": location_id}).fetchall()
-        count = len(comments)
+        try:
+            comments = db.execute("SELECT * FROM checkins WHERE location_id = :id",
+                {"id": location_id}).fetchall()
+            count = len(comments)
+        except OperationalError:
+            db.rollback()
+            return redirect(url_for("server_error_handler"))
 
         return render_template("location.html", location=location, comments=comments, count=count,
                                 time = time, summary=summary, temperature=temperature, humidity=humidity, pressure=pressure, windspeed=windspeed)
@@ -174,10 +196,14 @@ def location(location_id):
 def user(name):
     if session["user_id"][1] == name:
         # Get a list of comments
-        comments = db.execute("SELECT * FROM checkins WHERE name=:name",
-            {"name": name}).fetchall()
-        count = len(comments)
-        
+        try:
+            comments = db.execute("SELECT * FROM checkins WHERE name=:name",
+                {"name": name}).fetchall()
+            count = len(comments)
+        except OperationalError:
+            db.rollback()
+            return redirect(url_for("server_error_handler"))
+
         if not comments:
             return render_template("comments.html")
     
@@ -192,11 +218,16 @@ def user(name):
 def delete():
     if request.method == "POST":
         comment_id = request.form.get("comment_id")
-        db.execute("DELETE FROM checkins WHERE id=:id", {"id": comment_id})
-        db.commit()
+        try:
+            db.execute("DELETE FROM checkins WHERE id=:id", {"id": comment_id})
+            db.commit()
+        except OperationalError:
+            db.rollback()
+            return redirect(url_for("server_error_handler"))
 
         return redirect(request.referrer)
 
+# API overview page
 @app.route("/api")
 def api():
     return render_template("api.html")
@@ -204,8 +235,13 @@ def api():
 # API access
 @app.route("/api/location/<int:zipcode>")
 def location_api(zipcode):
-    location = db.execute("SELECT * FROM locations WHERE zipcode=:zipcode",
-        {"zipcode": zipcode}).fetchone()
+    try:
+        location = db.execute("SELECT * FROM locations WHERE zipcode=:zipcode",
+            {"zipcode": zipcode}).fetchone()
+    except OperationalError:
+        db.rollback()
+        return redirect(url_for("server_error_handler"))
+
     if location is None:
         return jsonify({"ERROR": "Invalid zipcode"}), 422
 
@@ -217,20 +253,19 @@ def location_api(zipcode):
         "Population": location.population
     })
 
-# bad request
-@app.errorhandler(BadRequest)
-def handle_bad_request(error):
-    return 'bad request!', 400
-
-# If any user tries to access to the nonexistent route, render an error page
+# If any user tries to access to nonexistent routes, render an error page
 @app.errorhandler(404)
 def page_not_found(error):
+    return render_template("error.html", message="The requested URL was not found on this server."), 404
+
+@app.errorhandler(BuildError)
+def build_error(error):
     return render_template("error.html", message="The requested URL was not found on this server."), 404
 
 # internal server error
 @app.errorhandler(500)
 def server_error_handler(error):
-    return render_template("error.html", message="Database connection failed. Please reload the page."), 500
+    return render_template("error.html", message="Database connection failed. Please try again."), 500
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
