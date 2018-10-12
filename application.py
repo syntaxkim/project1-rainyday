@@ -16,8 +16,8 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Check for environment variable
-if not os.getenv("DATABASE_URL"):
-    raise RuntimeError("DATABASE_URL is not set")
+if not os.getenv("HEROKU_POSTGRESQL_CHARCOAL_URL"):
+    raise RuntimeError("HEROKU_POSTGRESQL_CHARCOAL_URL is not set")
 
 if not os.getenv("API_SECRET_KEY"):
     raise RuntimeError("API_SECRET_KEY is not set")
@@ -31,7 +31,7 @@ Session(app)
 api_key = os.getenv("API_SECRET_KEY")
 
 # Set up database
-engine = create_engine(os.getenv("DATABASE_URL"), connect_args={'sslmode': 'require'})
+engine = create_engine(os.getenv("HEROKU_POSTGRESQL_CHARCOAL_URL"), connect_args={'sslmode': 'require'})
 db = scoped_session(sessionmaker(bind=engine))
 
 # pylint: disable=no-member
