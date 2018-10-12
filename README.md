@@ -36,7 +36,7 @@ You can also delete the comment as you want.
 Go to API page, and read the simple overview.\
 Example Request
 ```
-http://[address]/api/location/10002
+https://whispering-earth-51057.herokuapp.com/api/location/10002
 
     {
         "City": "NEW YORK", 
