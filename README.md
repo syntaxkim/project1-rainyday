@@ -48,7 +48,9 @@ http://[address]/api/location/10002
 
 ```
 ## Notes
-Connecting to the database over SSL is required. So make sure your client environment use an SSL connection.
+* The application is deployed with [Heroku](https://www.heroku.com).
+* Connecting to the database over SSL is required. So make sure your client environment use an SSL connection.
+* The database consists of 3 tables - users, locations, comments(check-ins)
 
 ## Used languages and tools
 * Languages: Python 3.7, JavaScript ES6, PostgreSQL 10.5, HTML, CSS
