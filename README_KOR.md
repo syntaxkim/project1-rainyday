@@ -1,6 +1,6 @@
 # Project 1 - Rainy Day (Flask)
 
-English: README.md(https://github.com/syntaxkim/project1/blob/master/README.md)
+English: [README.md](https://github.com/syntaxkim/project1/blob/master/README.md)
 
 미국에 있는 도시와 지역을 검색하고 지역 정보와 현재 날씨 정보를 알 수 있습니다. 각 지역마다 직접 코멘트를 생성할 수 있으며, 지역 정보에 대한 데이터를 API를 통해 제공하고 있습니다.
 
