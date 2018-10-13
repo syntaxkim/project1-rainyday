@@ -1,5 +1,7 @@
 # Project 1 - Rainy Day (Flask)
 
+한국어: [README_KOR](https://github.com/syntaxkim/project1/blob/master/README_KOR.md)
+
 Query for basic information about cities and towns in United States as well as weather information. You can leave a comment on every location. You are also able to query for location data via website's API access.
 
 As I only have location data of United States for now, I'm working for getting South Korea's data as well. I politely ask for your understanding.
