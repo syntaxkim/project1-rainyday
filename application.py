@@ -204,7 +204,25 @@ def verification(name):
 
 @app.route("/updatepassword", methods=["POST"])
 def updatepassword():
-    return render_template("index.html")
+    if request.method == "POST":
+        name = session["user_id"][1]
+        password = request.form.get("password")
+
+        # query for signing in
+        try:
+            user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)",
+                {"name": name, "password": password}).fetchone()
+        except OperationalError:
+            db.rollback()
+            return redirect(url_for("server_error_handler"))
+
+        if user is None:
+            flash("The password is wrong. Please try again.")
+            return redirect(request.referrer)
+        else:
+            return redirect(url_for("index"))
+
+    return redirect(url_for('page_not_found'))
 
 # user's comment list
 @app.route("/user/<string:name>/comment")
