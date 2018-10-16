@@ -197,6 +197,11 @@ def user(name):
     if session["user_id"][1] == name:
         return render_template("user.html")
 
+@app.route("/user/<string:name>/verification")
+def verification(name):
+    if session["user_id"][1] == name:
+        return render_template("verification.html")
+
 # user's comment list
 @app.route("/user/<string:name>/comment")
 def comment(name):
