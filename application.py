@@ -192,8 +192,8 @@ def location(location_id):
     return redirect(url_for('page_not_found'))
 
 # user's comment list
-@app.route("/user/<string:name>")
-def user(name):
+@app.route("/user/<string:name>/comment")
+def comment(name):
     if session["user_id"][1] == name:
         # Get a list of comments
         try:
