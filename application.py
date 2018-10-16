@@ -233,6 +233,26 @@ def verification(name):
 # Display new password page
 @app.route("/updatepassword", methods=["POST"])
 def updatepassword():
+    if request.method == "POST":
+        user_id = session["user_id"][0]
+
+        password = request.form.get("password")
+        confirmation = request.form.get("confirmation")
+
+        # (additional) server-side confirmation
+        if password != confirmation:
+            flash("Passwords don't match.")
+            return redirect(request.referrer)
+        
+        try:
+            db.execute("UPDATE users SET password = crypt(:password, gen_salt('md5')) WHERE id = :id",
+                {"password": password, "id": user_id})
+            db.commit()
+        except IntegrityError:
+            db.rollback()
+            flash("Your password is too short. Make longer password.")
+            return redirect(request.referrer)
+
     return render_template("index.html")
 
 # user's comment list
