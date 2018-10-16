@@ -197,18 +197,19 @@ def user(name):
     if session["user_id"][1] == name:
         return render_template("user.html")
 
-@app.route("/user/<string:name>/verification")
+# verifcation route
+@app.route("/user/<string:name>/verification", methods=["GET", "POST"])
 def verification(name):
-    if session["user_id"][1] == name:
-        return render_template("verification.html")
+    # routed from 'Change password' link
+    if request.method == "GET":
+        if session["user_id"][1] == name:
+            return render_template("verification.html")
 
-@app.route("/updatepassword", methods=["POST"])
-def updatepassword():
-    if request.method == "POST":
+    # user verification
+    elif request.method == "POST":
         name = session["user_id"][1]
         password = request.form.get("password")
 
-        # query for signing in
         try:
             user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)",
                 {"name": name, "password": password}).fetchone()
@@ -216,17 +217,23 @@ def updatepassword():
             db.rollback()
             return redirect(url_for("server_error_handler"))
 
+        # if the password is wrong
         if user is None:
             flash("The password is wrong. Please try again.")
             return redirect(request.referrer)
+        # if the password is correct
         else:
-            return redirect(url_for("update"), code=307)
+            return render_template("newpassword.html")
+            # status code 307 for POST request
+            # return redirect(url_for("updatepassword"), code=307)
 
-    return redirect(url_for('page_not_found'))
+    else:
+        return redirect(url_for('page_not_found'))
 
-@app.route("/newpassword", methods=["POST"])
-def update():
-    return render_template("newpassword.html")
+# Display new password page
+@app.route("/updatepassword", methods=["POST"])
+def updatepassword():
+    return render_template("index.html")
 
 # user's comment list
 @app.route("/user/<string:name>/comment")
