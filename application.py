@@ -230,7 +230,7 @@ def verification(name):
     else:
         return redirect(url_for('page_not_found'))
 
-# Display new password page
+# Display new password setting
 @app.route("/updatepassword", methods=["POST"])
 def updatepassword():
     if request.method == "POST":
