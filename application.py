@@ -191,6 +191,12 @@ def location(location_id):
     # if the user is not logged-in
     return redirect(url_for('page_not_found'))
 
+# user information
+@app.route("/user/<string:name>")
+def user(name):
+    if session["user_id"][1] == name:
+        return render_template("index.html")
+
 # user's comment list
 @app.route("/user/<string:name>/comment")
 def comment(name):
