@@ -220,9 +220,13 @@ def updatepassword():
             flash("The password is wrong. Please try again.")
             return redirect(request.referrer)
         else:
-            return redirect(url_for("index"))
+            return redirect(url_for("update"), code=307)
 
     return redirect(url_for('page_not_found'))
+
+@app.route("/newpassword", methods=["POST"])
+def update():
+    return render_template("newpassword.html")
 
 # user's comment list
 @app.route("/user/<string:name>/comment")
