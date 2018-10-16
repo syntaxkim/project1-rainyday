@@ -9,11 +9,20 @@
 <div class="row justify-content-md-center">
     <div class="col-lg-10 col-sm-12">
 
-        <!-- info section -->
+        <!-- user configuration -->
         <div>
-        <h5>Hello, {{ session["user_id"][1] }}!</h5>
+            <h5>Hello, {{ session["user_id"][1] }}!</h5>
+            <h5>What do you want to do?</h5>
         </div>
-        
+        <br>
+        <div>
+            <h5><a href="{{ url_for('index') }}">Change password</a></h5>
+        </div>
+        <br>
+        <div>
+            <h5><a href="{{ url_for('index') }}">Delete account</a></h5>
+        </div>
+
     </div>
 </div>
 
