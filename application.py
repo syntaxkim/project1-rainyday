@@ -194,16 +194,17 @@ def location(location_id):
 # user information
 @app.route("/user/<string:name>")
 def user(name):
-    if session["user_id"][1] == name:
+    if "user_id" in session and session["user_id"][1] == name:
         return render_template("user.html")
+    else:
+        return redirect(url_for('page_not_found'))
 
 # verifcation route
 @app.route("/user/<string:name>/verification", methods=["GET", "POST"])
 def verification(name):
     # routed from 'Change password' link
-    if request.method == "GET":
-        if session["user_id"][1] == name:
-            return render_template("verification.html")
+    if request.method == "GET" and session["user_id"][1] == name:
+        return render_template("verification.html")
 
     # user verification
     elif request.method == "POST":
@@ -248,17 +249,21 @@ def updatepassword():
             db.execute("UPDATE users SET password = crypt(:password, gen_salt('md5')) WHERE id = :id",
                 {"password": password, "id": user_id})
             db.commit()
+            session.pop("user_id", None)
+            return render_template("signin_again.html")
         except IntegrityError:
             db.rollback()
             flash("Your password is too short. Make longer password.")
             return redirect(request.referrer)
 
-    return render_template("index.html")
+    # iff the request method is GET
+    else:
+        return redirect(url_for('page_not_found'))
 
 # user's comment list
 @app.route("/user/<string:name>/comment")
 def comment(name):
-    if session["user_id"][1] == name:
+    if "user_id" in session and session["user_id"][1] == name:
         # Get a list of comments
         try:
             comments = db.execute("SELECT * FROM checkins WHERE name=:name",
