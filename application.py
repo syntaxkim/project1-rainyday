@@ -195,7 +195,7 @@ def location(location_id):
 @app.route("/user/<string:name>")
 def user(name):
     if session["user_id"][1] == name:
-        return render_template("index.html")
+        return render_template("user.html")
 
 # user's comment list
 @app.route("/user/<string:name>/comment")
