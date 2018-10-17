@@ -50,5 +50,5 @@ https://minsu-rainyday.herokuapp.com/api/location/10002
 * 데이터베이스는 총 3개의 테이블로 구성했습니다 - 사용자, 장소, 코멘트
 
 ## 사용 언어 및 도구
-* Languages: Python 3.7, JavaScript ES6, PostgreSQL 10.5, HTML, CSS
+* Languages: Python 3.7, SQL, HTML, CSS, JavaScript ES6
 * Frameworks and Libraries: Flask, jQuery, Bootstrap
