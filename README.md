@@ -49,5 +49,5 @@ https://minsu-rainyday.herokuapp.com/api/location/10002
 * The database consists of 3 tables - users, locations, comments(check-ins)
 
 ## Used languages and tools
-* Languages: Python 3.7, JavaScript ES6, PostgreSQL 10.5, HTML, CSS
+* Languages: Python 3.7, SQL, HTML, CSS, JavaScript ES6
 * Frameworks and Libraries: Flask, jQuery, Bootstrap
