@@ -28,7 +28,8 @@ Go to that location, leave a comment.\
 You can also delete the comment as you want.
 
 ### You can access location API from the database.
-Go to API page, and read the simple overview.\
+Go to API page, and read the simple overview.
+
 Example Request
 ```
 https://minsu-rainyday.herokuapp.com/api/location/10002
