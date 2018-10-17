@@ -50,4 +50,4 @@ https://minsu-rainyday.herokuapp.com/api/location/10002
 
 ## Languages and Tools
 * Languages: Python 3.7, SQL, HTML, CSS, JavaScript ES6
-* Frameworks and Libraries: Flask, jQuery, Bootstrap
+* Frameworks and Libraries: Flask, Bootstrap, jQuery
