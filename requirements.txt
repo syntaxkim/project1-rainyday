@@ -3,5 +3,5 @@ Flask-Session
 psycopg2-binary
 SQLAlchemy
 requests
+itsdangerous==0.24
 gunicorn
-ItsDangerous==0.24

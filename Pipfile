@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 "psycopg2-binary" = "*"
 requests = "*"
+itsdangerous = "==0.24"
 gunicorn = "*"
 Flask = "*"
 Flask-Session = "*"
