@@ -45,7 +45,7 @@ https://minsu-rainyday.herokuapp.com/api/location/10002
 ```
 ## Notes
 * The application is deployed with [Heroku](https://www.heroku.com).
-* Due to server's automatic sleep function, a short delay could to reboot the application.
+* Due to server's automatic sleep function, a short delay could occur to reboot the application.
 * Connecting to the database over SSL is required. So make sure your client environment use an SSL connection.
 * The database consists of 3 tables - users, locations, comments(check-ins)
 
