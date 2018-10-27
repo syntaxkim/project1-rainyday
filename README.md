@@ -2,11 +2,11 @@
 
 한국어: [README_KOR.md](https://github.com/syntaxkim/project1/blob/master/README_KOR.md)
 
-Query for basic information about cities and towns in United States as well as weather information. You can leave a comment on every location. You are also able to query for location data via website's API access.
+Query for basic information about cities and towns in United States as well as weather information.
 
 As I only have location data of United States for now, I'm working for getting South Korea's data as well. I politely ask for your understanding.
 
-Only raw SQL is used instead of using ORM-like syntax to understand and get a lot more sense of SQL itself. ORM will be used in Project 2.
+Only raw SQL is used instead of using ORM-like syntax to understand and get a lot more sense of SQL itself. ORM will be used in Project 3.
 
 
 ## Features
@@ -23,7 +23,7 @@ The location page will show you the location information such as ZIP code, city 
 The location page will show you the current weather information such as temperature, humidity, wind speed, etc.\
 The weather information uses [Dark Sky API](https://darksky.net/dev) service.
 
-### Check in a comment on a location you want
+### Check in a comment on every location.
 Go to that location, leave a comment.\
 You can also delete the comment as you want.
 
@@ -45,7 +45,7 @@ https://minsu-rainyday.herokuapp.com/api/location/10002
 ```
 ## Notes
 * The application is deployed with [Heroku](https://www.heroku.com).
-* Due to server's automatic sleep function, a short delay could occur following inital connection.
+* Due to server's automatic sleep function, a short delay could to reboot the application.
 * Connecting to the database over SSL is required. So make sure your client environment use an SSL connection.
 * The database consists of 3 tables - users, locations, comments(check-ins)
 
