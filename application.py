@@ -1,4 +1,5 @@
 import os
+# from models import * (ORM is not used in this project on purpose)
 
 from flask import Flask, session, render_template, request, redirect, url_for, escape, jsonify, flash
 from flask_session import Session
@@ -38,7 +39,7 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    # if a user is logged-in, show search box
+    """ if a user is logged-in, show search box """
     if "user_id" in session:
         return render_template("search.html")
     else:
@@ -103,7 +104,7 @@ def signin():
 # Sign out
 @app.route("/signout")
 def signout():
-    # Remove the user_id from the session if it's there
+    """ Remove the user_id from the session if it's there """
     if "user_id" in session:
         session.pop("user_id", None)
         return redirect(url_for("index"))
