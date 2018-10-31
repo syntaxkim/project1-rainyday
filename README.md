@@ -6,7 +6,7 @@ Query for basic information about cities and towns in United States as well as w
 
 As I only have location data of United States for now, I'm working for getting South Korea's data as well. I politely ask for your understanding.
 
-Only raw SQL is used instead of using ORM-like syntax to understand and get a lot more sense of SQL itself. ORM will be used in Project 3.
+Only raw SQL is used instead of using ORM-like syntax to understand and get a lot more sense of SQL itself.
 
 
 ## Features
