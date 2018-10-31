@@ -11,6 +11,23 @@ Only raw SQL is used instead of using ORM-like syntax to understand and get a lo
 
 ## Features
 
+### Access location API from the database.
+Go to API page, and read the simple overview.
+
+Example Request
+```
+https://minsu-rainyday.herokuapp.com/api/location/10002
+
+    {
+        "City": "NEW YORK", 
+        "Latitude": 40.71, 
+        "Longitude": -73.99, 
+        "Population": 81410, 
+        "Zipcode": 10002
+    }
+
+```
+
 ### Sign up and log in to search location
 To search location, you are required to sign in. If you don't have one, just simply make a new username.\
 When creating a username, your password is encrypted using Postgres module 'pgcrypto'.\
@@ -27,22 +44,7 @@ The weather information uses [Dark Sky API](https://darksky.net/dev) service.
 Go to that location, leave a comment.\
 You can also delete the comment as you want.
 
-### You can access location API from the database.
-Go to API page, and read the simple overview.
 
-Example Request
-```
-https://minsu-rainyday.herokuapp.com/api/location/10002
-
-    {
-        "City": "NEW YORK", 
-        "Latitude": 40.71, 
-        "Longitude": -73.99, 
-        "Population": 81410, 
-        "Zipcode": 10002
-    }
-
-```
 ## Notes
 * The application is deployed with [Heroku](https://www.heroku.com).
 * Due to server's automatic sleep function, a short delay could occur to reboot the application.
