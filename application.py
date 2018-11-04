@@ -161,7 +161,8 @@ def location(location_id):
 
         # Get weather data from https://darksky.net/dev
         # other HTTP query parameters options for units: auto, us, si
-        res = requests.get(f"https://api.darksky.net/forecast/{api_key}/{location.lat},{location.long}?units=si&exclude=minutely,hourly,daily,alerts,flags")
+        res = requests.get(f"https://api.darksky.net/forecast/{api_key}/{location.lat},{location.long}",
+            params={"units": "si", "exclude": "minutes,hourly,daily,alerts,flags"})
 
         if res.status_code != 200:
             raise Exception("ERROR: API request unsuccessful.")
