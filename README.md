@@ -6,8 +6,7 @@ Query for basic information about cities and towns in United States as well as w
 
 As I only have location data of United States for now, I'm working for getting South Korea's data as well. I politely ask for your understanding.
 
-Only raw SQL is used instead of using ORM-like syntax to understand and get a lot more sense of SQL itself.
-
+Only raw SQL is used instead of using ORM-like syntax to understand and get a lot more sense of SQL itself. The application uses PostgreSQL for DBMS.
 
 ## Features
 
@@ -39,7 +38,6 @@ https://minsu-rainyday.herokuapp.com/api/locations/10002/city
     }
 
 ```
-
 
 ### Sign up and log in to search location
 When creating a username, your password is encrypted using Postgres module 'pgcrypto'.\
