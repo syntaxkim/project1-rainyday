@@ -29,8 +29,8 @@ https://minsu-rainyday.herokuapp.com/api/locations/10002
     }
 
 
-특정 URL을 통해 기본 JSON 데이터에서 일부만 추출이 가능합니다.
-city, lat, long 만 추가했습니다.
+You can also access each endpoint by specifying particular information.
+Supported endpoints: city, lat, long
 
 https://minsu-rainyday.herokuapp.com/api/locations/10002/city
 
