@@ -16,6 +16,8 @@ API 페이지에서 개요를 확인 후 사용이 가능합니다.
 
 예시
 ```
+Use GET request
+
 https://minsu-rainyday.herokuapp.com/api/locations/10002
 
     {
@@ -26,10 +28,19 @@ https://minsu-rainyday.herokuapp.com/api/locations/10002
         "Zipcode": 10002
     }
 
+
+You can also access each endpoint by specifying particular information.
+Supported endpoints: city, lat, long
+
+https://minsu-rainyday.herokuapp.com/api/locations/10002/city
+
+    {
+        "City": "NEW YORK"
+    }
+
 ```
 
 ### 회원 가입, 로그인, 장소 검색
-장소 검색을 위해서는 계정을 만들고 로그인을 해야합니다.\
 계정 생성 시 비밀번호는 Postgres의 'pgcrypto' module을 사용해 암호화 됩니다.\
 (암호화에 사용되는 알고리즘은 MD5 입니다.)
 

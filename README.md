@@ -16,6 +16,8 @@ Go to API page, and read the simple overview.
 
 Example Request
 ```
+Use GET request
+
 https://minsu-rainyday.herokuapp.com/api/locations/10002
 
     {
@@ -26,10 +28,20 @@ https://minsu-rainyday.herokuapp.com/api/locations/10002
         "Zipcode": 10002
     }
 
+
+특정 URL을 통해 기본 JSON 데이터에서 일부만 추출이 가능합니다.
+city, lat, long 만 추가했습니다.
+
+https://minsu-rainyday.herokuapp.com/api/locations/10002/city
+
+    {
+        "City": "NEW YORK"
+    }
+
 ```
 
+
 ### Sign up and log in to search location
-To search location, you are required to sign in. If you don't have one, just simply make a new username.\
 When creating a username, your password is encrypted using Postgres module 'pgcrypto'.\
 (The algorithm to encrypt is MD5-based crypt)
 

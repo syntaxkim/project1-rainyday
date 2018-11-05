@@ -22,15 +22,26 @@
             <br>
             <div><h3>Example Request</h3></div>
             <div class="card">
-                <div class="card-body">https://minsu-rainyday.herokuapp.com/api/locations/10002
+                <div class="card-body">
                     <pre>
-                        
+https://minsu-rainyday.herokuapp.com/api/locations/10002
+
     {
         "City": "NEW YORK", 
         "Latitude": 40.71, 
         "Longitude": -73.99, 
         "Population": 81410, 
         "Zipcode": 10002
+    }
+
+
+You can also access each endpoint by specifying particular information.
+Supported endpoints: city, lat, long
+    
+https://minsu-rainyday.herokuapp.com/api/locations/10002/city
+
+    {
+        "City": "NEW YORK"
     }
                     </pre>
                 </div>
@@ -40,7 +51,7 @@
                 <div>
                     <ul>
                         <li>
-                            API responses consist of a UTF-8-encoded, JSON-formatted object
+                            API responses consist of a UTF-8-encoded, JSON-formatted object.
                         </li>
                         <li>
                             As I only have location data of United States for now,<br>
