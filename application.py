@@ -77,29 +77,32 @@ def signup():
 # Sign in
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
-    if request.method == "POST":
-        # Get a name and a password from a user
-        name = request.form.get("name")
-        password = request.form.get("password")
-
-        # query for signing in
-        try:
-            user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)",
-                {"name": name, "password": password}).fetchone()
-        except OperationalError:
-            db.rollback()
-            return redirect(url_for("server_error_handler"))
-
-        # if the matching user does not exist in the database, send an error message
-        if user is None:
-            flash("The username or password is wrong. Please sign in again.")
-            return redirect(request.referrer)
-        else:
-            session["user_id"] = db.execute("SELECT id, name FROM users WHERE name = :name AND password = CRYPT(:password, password)",
-                {"name": name, "password": password}).fetchone()
-            return redirect(url_for("index"))
+    if "user_id" in session:
+        return redirect(url_for("index"))
     else:
-        return render_template("signin.html")
+        if request.method == "POST":
+            # Get a name and a password from a user
+            name = request.form.get("name")
+            password = request.form.get("password")
+
+            # query for signing in
+            try:
+                user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)",
+                    {"name": name, "password": password}).fetchone()
+            except OperationalError:
+                db.rollback()
+                return redirect(url_for("server_error_handler"))
+
+            # if the matching user does not exist in the database, send an error message
+            if user is None:
+                flash("The username or password is wrong. Please sign in again.")
+                return redirect(request.referrer)
+            else:
+                session["user_id"] = db.execute("SELECT id, name FROM users WHERE name = :name AND password = CRYPT(:password, password)",
+                    {"name": name, "password": password}).fetchone()
+                return redirect(url_for("index"))
+        else:
+            return render_template("signin.html")
 
 # Sign out
 @app.route("/signout")
