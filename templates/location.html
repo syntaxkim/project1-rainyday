@@ -71,10 +71,16 @@
             {% for comment in comments %}
             {% set comment_id=comment.id %}
                 <li class="list-group-item">
-                    name: {{ comment.name }}, comment: {{ comment.comment }}, {{ comment.time }} (UTC)
-                    <form action="{{ url_for('delete', comment_id=comment_id) }}" method="POST" class="delete">
-                        <button type="submit" class="btn btn-secondary" name="comment_id" value="{{ comment_id }}">delete</button>
-                    </form>
+                    <div class="row">
+                        <div class="col-10">
+                            <strong>{{ comment.name }}</strong>: {{ comment.comment }}, {{ comment.time }} (UTC)
+                        </div>
+                        <div class="col-2">
+                            <form action="{{ url_for('delete', comment_id=comment_id) }}" method="POST" class="delete">
+                                <button type="submit" class="btn btn-light btn-block" name="comment_id" value="{{ comment_id }}">X</button>
+                            </form>
+                        </div>
+                    </div>
                 </li>
             {% endfor %}
             </ul>
