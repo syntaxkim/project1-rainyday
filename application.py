@@ -308,24 +308,40 @@ def api():
 
 # API access
 @app.route("/api/locations/<int:zipcode>")
-def location_api(zipcode):
+def location_api(zipcode, arg1=None):
     try:
         location = db.execute("SELECT * FROM locations WHERE zipcode=:zipcode",
             {"zipcode": zipcode}).fetchone()
-    except OperationalError:
-        db.rollback()
-        return redirect(url_for("server_error_handler"))
+    except:
+        return jsonify({"ERROR": "Exceeded database connection limit. Please try again later."}), 500
 
     if location is None:
         return jsonify({"ERROR": "Invalid zipcode"}), 422
 
-    return jsonify({
-        "Zipcode": location.zipcode,
-        "City": location.city,
-        "Latitude": location.lat,
-        "Longitude": location.long,
-        "Population": location.population
-    })
+    if arg1 == None:	
+	    return jsonify({
+			"Zipcode": location.zipcode,
+			"City": location.city,
+			"Latitude": location.lat,
+			"Longitude": location.long,
+			"Population": location.population
+		})
+    elif arg1 == "city":
+        return jsonify({
+            "City": location.city
+        })
+    elif arg1 == "lat":
+        return jsonify({
+            "Latitude": location.lat
+        })
+    elif arg1 == "long":
+        return jsonify({
+            "Longitude": location.long
+        })
+    else:
+        return jsonify({"ERROR": "Invalid URL"}), 422
+
+app.add_url_rule('/api/locations/<int:zipcode>/<arg1>', view_func=location_api)
 
 # If any user tries to access to nonexistent routes, render an error page
 @app.errorhandler(404)
