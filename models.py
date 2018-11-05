@@ -1,6 +1,6 @@
 """ This file is not part of the appliation but for the reference when using ORM """
 
-from flask_sqlalchemy import flask_sqlalchemy
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
