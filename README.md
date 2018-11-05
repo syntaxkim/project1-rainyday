@@ -16,7 +16,7 @@ Go to API page, and read the simple overview.
 
 Example Request
 ```
-https://minsu-rainyday.herokuapp.com/api/location/10002
+https://minsu-rainyday.herokuapp.com/api/locations/10002
 
     {
         "City": "NEW YORK", 

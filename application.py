@@ -131,7 +131,7 @@ def search():
     return render_template("search.html", results=results)
 
 # location info
-@app.route("/location/<int:location_id>", methods=["GET", "POST"])
+@app.route("/locations/<int:location_id>", methods=["GET", "POST"])
 def location(location_id):
     if "user_id" in session:
         # if the user submit a comment, commit INSERT query into the database
@@ -304,7 +304,7 @@ def api():
     return render_template("api.html")
 
 # API access
-@app.route("/api/location/<int:zipcode>")
+@app.route("/api/locations/<int:zipcode>")
 def location_api(zipcode):
     try:
         location = db.execute("SELECT * FROM locations WHERE zipcode=:zipcode",

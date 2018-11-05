@@ -16,7 +16,7 @@ API 페이지에서 개요를 확인 후 사용이 가능합니다.
 
 예시
 ```
-https://minsu-rainyday.herokuapp.com/api/location/10002
+https://minsu-rainyday.herokuapp.com/api/locations/10002
 
     {
         "City": "NEW YORK", 
