@@ -39,9 +39,8 @@ https://minsu-rainyday.herokuapp.com/api/locations/10002/city
 
 ```
 
-### Sign up and log in to search location
-When creating a username, your password is encrypted using Postgres module 'pgcrypto'.\
-(The algorithm to encrypt is MD5-based crypt)
+### User authentication
+Password is encrypted by PBKDF2-SHA256 algorithm.
 
 ### Search location information (Database)
 The location page will show you the location information such as ZIP code, city name, coordinates, etc.
