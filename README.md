@@ -6,7 +6,7 @@ Query for basic information about cities and towns in United States as well as w
 
 As I only have location data of United States for now, I'm working for getting South Korea's data as well. I politely ask for your understanding.
 
-Only raw SQL is used instead of using ORM-like syntax to understand and get a lot more sense of SQL itself. The application uses PostgreSQL for DBMS.
+Only raw SQL is used in order to understand and get a lot more sense of SQL itself. But I wrote and included [models.py](https://github.com/syntaxkim/project1-rainyday/blob/master/models.py) to refer to in case of ORM with [Flask-SQLAlchemy](http://flask-sqlalchemy.pocoo.org/2.3/).
 
 ## Features
 
@@ -63,3 +63,4 @@ You can also delete the comment as you want.
 ## Languages and Tools
 * Languages: Python 3.7, SQL, HTML, CSS, JavaScript ES6
 * Frameworks and Libraries: Flask, Bootstrap, jQuery
+* DBMS: PostgreSQL
