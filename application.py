@@ -5,6 +5,7 @@ from flask import Flask, session, render_template, request, redirect, url_for, e
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from passlib.hash import pbkdf2_sha256
 
 # Error handlers
 from sqlalchemy.exc import IntegrityError, OperationalError
@@ -61,8 +62,8 @@ def signup():
 
         # If the user name already exists in the database, return an error message.
         try:
-            db.execute("INSERT INTO users (name, password) VALUES (:name, crypt(:password, gen_salt('md5')))",
-                {"name": name, "password": password})
+            db.execute("INSERT INTO users (name, password) VALUES (:name, :password)",
+                {"name": name, "password": pbkdf2_sha256.hash(password)})
             db.commit()
         except IntegrityError:
             db.rollback()
@@ -87,8 +88,8 @@ def signin():
 
             # query for signing in
             try:
-                user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)",
-                    {"name": name, "password": password}).fetchone()
+                user = db.execute("SELECT * FROM users WHERE name = :name",
+                    {"name": name}).fetchone()
             except OperationalError:
                 db.rollback()
                 return redirect(url_for("server_error_handler"))
@@ -97,9 +98,11 @@ def signin():
             if user is None:
                 flash("The username or password is wrong. Please sign in again.")
                 return redirect(request.referrer)
+            elif not pbkdf2_sha256.verify(password, user.password):
+                flash("The username or password is wrong. Please sign in again.")
+                return redirect(request.referrer)
             else:
-                session["user_id"] = db.execute("SELECT id, name FROM users WHERE name = :name AND password = CRYPT(:password, password)",
-                    {"name": name, "password": password}).fetchone()
+                session["user_id"] = [user.id, user.name]
                 return redirect(url_for("index"))
         else:
             return render_template("signin.html")
@@ -217,17 +220,16 @@ def verification(name):
         password = request.form.get("password")
 
         try:
-            user = db.execute("SELECT * FROM users WHERE name = :name AND password = CRYPT(:password, password)",
-                {"name": name, "password": password}).fetchone()
+            user = db.execute("SELECT * FROM users WHERE name = :name",
+                {"name": name}).fetchone()
         except OperationalError:
             db.rollback()
             return redirect(url_for("server_error_handler"))
 
         # if the password is wrong
-        if user is None:
-            flash("The password is wrong. Please try again.")
+        if not pbkdf2_sha256.verify(password, user.password):
+            flash("The password is wrong. Please sign in again.")
             return redirect(request.referrer)
-        # if the password is correct
         else:
             return render_template("newpassword.html")
             # status code 307 for POST request
@@ -251,8 +253,8 @@ def updatepassword():
             return redirect(request.referrer)
         
         try:
-            db.execute("UPDATE users SET password = crypt(:password, gen_salt('md5')) WHERE id = :id",
-                {"password": password, "id": user_id})
+            db.execute("UPDATE users SET password = :password WHERE id = :id",
+                {"password": pbkdf2_sha256.hash(password), "id": user_id})
             db.commit()
             session.pop("user_id", None)
             return render_template("signin_again.html")
