@@ -6,7 +6,7 @@ English: [README.md](https://github.com/syntaxkim/project1-rainyday/blob/master/
 
 프로젝트 시작에 앞서 미국의 장소 데이터만을 갖고 개발했습니다. 한국의 모든 도시들의 좌표와 주소가 정리되어 있는 DB도 만들고 있으니, 깊은 양해 부탁드립니다.
 
-SQL 자체의 대한 이해와 숙달을 위해 ORM 문법이 아닌 순 SQL만을 사용하여 구현했습니다. DBMS는 PostgreSQL을 사용하였습니다.
+SQL 자체의 대한 이해와 숙달을 위해 순 SQL만을 사용했습니다. 그러나 [Flask-SQLAlchemy](http://flask-sqlalchemy.pocoo.org/2.3/)를 사용한 ORM 시 참고를 위해 [models.py](https://github.com/syntaxkim/project1-rainyday/blob/master/models.py) 파일을 별도로 작성 및 추가하였습니다.
 
 
 ## 기능
@@ -63,3 +63,4 @@ https://minsu-rainyday.herokuapp.com/api/locations/10002/city
 ## 사용 언어 및 도구
 * Languages: Python 3.7, SQL, HTML, CSS, JavaScript ES6
 * Frameworks and Libraries: Flask, Bootstrap, jQuery
+* DBMS: PostgreSQL
