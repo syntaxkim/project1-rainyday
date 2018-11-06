@@ -40,9 +40,8 @@ https://minsu-rainyday.herokuapp.com/api/locations/10002/city
 
 ```
 
-### 회원 가입, 로그인, 장소 검색
-계정 생성 시 비밀번호는 Postgres의 'pgcrypto' module을 사용해 암호화 됩니다.\
-(암호화에 사용되는 알고리즘은 MD5 입니다.)
+### 사용자 인증
+비밀번호는 PBKDF2-SHA256 알고리즘을 통해 암호화됩니다.
 
 ### 장소 정보 (데이터베이스)
 장소 페이지에서 각 장소의 집 코드, 도시 이름, 좌표 등을 볼 수 있습니다.
