@@ -13,6 +13,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
+    checkins = db.relationship("Checkin", backref="checkin", lazy=True)
 
     def add_user(self):
         try:
@@ -41,17 +42,10 @@ class Location(db.Model):
         except:
             raise Exception
 
-    def get_checkins(self):
-        try:
-            checkins = Checkin.query.filter_by(location_id=self.id).all()
-            return checkins
-        except:
-            raise Exception
-
 class Checkin(db.Model):
     __tablename__ = "checkins"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, db.ForeignKey("users.name"), nullable=False)
     comment = db.Column(db.String(100), nullable=False)
     time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     location_id = db.Column(db.Integer, db.ForeignKey("locations.id"), nullable=False)
