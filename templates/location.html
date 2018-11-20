@@ -26,12 +26,12 @@
             <h5>Weather information</h5>
         </div>
         <ul class="list-group">
-            <li class="list-group-item">Time: {{ time }} (UTC)</li>
-            <li class="list-group-item">Summary: {{ summary }}</li>
-            <li class="list-group-item">Temperature: {{ temperature }} &#8451;</li>
-            <li class="list-group-item">Humidity: {{ humidity }} %</li>
-            <li class="list-group-item">Pressure: {{ pressure }} hPa</li>
-            <li class="list-group-item">Wind Speed: {{ windspeed }} m/s</li>
+            <li class="list-group-item">Time: {{ weather.time }} (UTC)</li>
+            <li class="list-group-item">Summary: {{ weather.summary }}</li>
+            <li class="list-group-item">Temperature: {{ weather.temperature }} &#8451;</li>
+            <li class="list-group-item">Humidity: {{ weather.humidity }} %</li>
+            <li class="list-group-item">Pressure: {{ weather.pressure }} hPa</li>
+            <li class="list-group-item">Wind Speed: {{ weather.windspeed }} m/s</li>
         </ul>
     </div>
 </div>
@@ -39,8 +39,8 @@
 <div class="row justify-content-md-center">
     <div class="col-lg-10">
         <div>
-        {% if count %}
-            <h5>The number of comments: {{ count }}</h5>
+        {% if comments|length > 0 %}
+            <h5>The number of comments: {{ comments|length }}</h5>
         {% else %}
             <h5>No comments on this location yet.</h5>
         {% endif %}

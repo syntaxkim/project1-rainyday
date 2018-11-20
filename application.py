@@ -175,14 +175,15 @@ def location(location_id):
 
         data = res.json()
         
-        # Convert UNIX timestamp from API request to string timestamp
-        time = datetime.fromtimestamp(data["currently"]["time"])
-
-        summary = data["currently"]["summary"]
-        temperature = data["currently"]["temperature"]
-        humidity = (data["currently"]["humidity"])*100
-        pressure = data["currently"]["pressure"]
-        windspeed = data["currently"]["windSpeed"]
+        weather = {
+            # Convert UNIX timestamp from API request to string timestamp
+            "time": datetime.fromtimestamp(data["currently"]["time"]),
+            "summary": data["currently"]["summary"],
+            "temperature": data["currently"]["temperature"],
+            "humidity": (data["currently"]["humidity"])*100,
+            "pressure": data["currently"]["pressure"],
+            "windspeed": data["currently"]["windSpeed"]
+        }
 
         # Get comments data
         try:
@@ -193,8 +194,7 @@ def location(location_id):
             db.rollback()
             return redirect(url_for("server_error_handler"))
 
-        return render_template("location.html", location=location, comments=comments, count=count,
-                                time = time, summary=summary, temperature=temperature, humidity=humidity, pressure=pressure, windspeed=windspeed)
+        return render_template("location.html", location=location, comments=comments, count=count, weather=weather)
     
     # if the user is not logged-in
     return redirect(url_for('page_not_found'))
