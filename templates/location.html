@@ -5,24 +5,7 @@
 {% endblock %}
 
 {% block body %}
-<div class="row justify-content-md-center">
-    <div class="col-lg-10">
-        <form action="{{ url_for('search') }}" method="POST" id="search">
-            <div class="form-group">
-                <label><h5>Search your locations</h5></label>
-                <div class="form-row">
-                    <div class="col-9">
-                        <input class="form-control" name="location" autofocus autocomplete="off" type="text" placeholder="ZIP Code or city name">
-                    </div>
-                    <div class="col-3">
-                        <button type="submit" class="btn btn-primary btn-block">Search</button>
-                    </div>
-                </div>
-                <small class="form-text text-muted">Example: 100, new york, washington, los, etc.</small>
-            </div>
-        </form>
-    </div>
-</div>
+{% include "searchbar.html" %}
 <br>
 <div class="row justify-content-md-center">
     <div class="col-lg-5">
