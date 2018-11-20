@@ -275,7 +275,6 @@ def comment(name):
         try:
             comments = db.execute("SELECT * FROM checkins WHERE name=:name",
                 {"name": name}).fetchall()
-            count = len(comments)
         except OperationalError:
             db.rollback()
             return redirect(url_for("server_error_handler"))
@@ -283,7 +282,7 @@ def comment(name):
         if not comments:
             return render_template("comments.html")
     
-        return render_template("comments.html", comments=comments, count=count)
+        return render_template("comments.html", comments=comments)
 
     # if the user is not logged-in
     else:
@@ -292,8 +291,10 @@ def comment(name):
 # Delete comments from My comment list
 @app.route("/delete", methods=["POST"])
 def delete():
-    if request.method == "POST":
-        comment_id = request.form.get("comment_id")
+    comment_id = request.form.get("comment_id")
+    comment = db.execute("SELECT * FROM checkins WHERE id=:id", {"id": comment_id}).fetchone()
+
+    if comment.name == session["user_id"][1]:
         try:
             db.execute("DELETE FROM checkins WHERE id=:id", {"id": comment_id})
             db.commit()
@@ -301,6 +302,8 @@ def delete():
             db.rollback()
             return redirect(url_for("server_error_handler"))
 
+        return redirect(request.referrer)
+    else:
         return redirect(request.referrer)
 
 # API overview page
