@@ -2,11 +2,11 @@
 
 한국어: [README_KOR.md](https://github.com/syntaxkim/project1-rainyday/blob/master/README_KOR.md)
 
+![main](https://raw.githubusercontent.com/syntaxkim/project1-rainyday/master/screenshots/screenshot0.png)
+
 Query for basic information about cities and towns in United States as well as weather information.
 
-As I only have location data of United States for now, I'm working for getting South Korea's data as well. I politely ask for your understanding.
 
-Only raw SQL is used in order to understand and get a lot more sense of SQL itself. But I wrote and included [models.py](https://github.com/syntaxkim/project1-rainyday/blob/master/models.py) to refer to in case of ORM with [Flask-SQLAlchemy](http://flask-sqlalchemy.pocoo.org/2.3/).
 
 ## Features
 
@@ -39,26 +39,24 @@ https://minsu-rainyday.herokuapp.com/api/locations/10002/city
 
 ```
 
-### User authentication
-Password is encrypted by PBKDF2-SHA256 algorithm.
-
-### Search location information (Database)
-The location page will show you the location information such as ZIP code, city name, coordinates, etc.
-
-### Current weather information (API)
-The location page will show you the current weather information such as temperature, humidity, wind speed, etc.\
+### Search location information with current weather
+The location page will show you the location information such as ZIP code, city name, coordinates along with current weather.
 The weather information uses [Dark Sky API](https://darksky.net/dev) service.
+![main](https://raw.githubusercontent.com/syntaxkim/project1-rainyday/master/screenshots/screenshot1.png)
+![main](https://raw.githubusercontent.com/syntaxkim/project1-rainyday/master/screenshots/screenshot2.png)
 
 ### Check in a comment on every location.
 Go to that location, leave a comment.\
 You can also delete the comment as you want.
+![main](https://raw.githubusercontent.com/syntaxkim/project1-rainyday/master/screenshots/screenshot3.png)
 
+### User authentication
+Password is encrypted by PBKDF2-SHA256 algorithm.
 
 ## Notes
-* The application is deployed with [Heroku](https://www.heroku.com).
-* Due to server's automatic sleep function, a short delay could occur to reboot the application.
-* Connecting to the database over SSL is required. So make sure your client environment use an SSL connection.
+* Only raw SQL is used in order to understand and get a lot more sense of SQL itself. But I wrote and included [models.py](https://github.com/syntaxkim/project1-rainyday/blob/master/models.py) to refer to in case of ORM with [Flask-SQLAlchemy](http://flask-sqlalchemy.pocoo.org/2.3/).
 * The database consists of 3 tables - users, locations, comments(check-ins)
+* Demo application is deployed with [Heroku](https://www.heroku.com) and due to server's automatic sleep function, a short delay could occur to reboot the application.
 
 ## Languages and Tools
 * Languages: Python 3.7, SQL, HTML, CSS, JavaScript ES6
