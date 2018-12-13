@@ -2,7 +2,7 @@
 
 English: [README.md](https://github.com/syntaxkim/project1-rainyday/blob/master/README.md)
 
-데모  : https://minsu-rainyday.herokuapp.com/
+데모 : https://minsu-rainyday.herokuapp.com/
 ![main](https://raw.githubusercontent.com/syntaxkim/project1-rainyday/master/screenshots/screenshot0.png)
 
 미국에 있는 도시와 지역을 검색하고 지역 정보와 현재 날씨 정보를 알 수 있습니다.
