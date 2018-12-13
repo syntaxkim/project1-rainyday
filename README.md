@@ -2,6 +2,7 @@
 
 한국어: [README_KOR.md](https://github.com/syntaxkim/project1-rainyday/blob/master/README_KOR.md)
 
+Demo app: https://minsu-rainyday.herokuapp.com/
 ![main](https://raw.githubusercontent.com/syntaxkim/project1-rainyday/master/screenshots/screenshot0.png)
 
 Query for basic information about cities and towns in United States as well as weather information.
